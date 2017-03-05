@@ -55,11 +55,7 @@ export class VisorComponent implements OnInit{
         this.scene.add( this.rootGroup );
 
 
-        //Insert here molecules
-        //this.loadMolecule('caffeine');
-
         // Lights
-
         let light = new THREE.DirectionalLight( 0xffffff, 0.8 );
         light.position.set( 1, 1, 1 );
         this.scene.add( light );
@@ -69,39 +65,6 @@ export class VisorComponent implements OnInit{
         this.scene.add( light2 );
 
         this.animate();
-        /*
-
-        let scene = new THREE.Scene();
-        //let camera = new THREE.PerspectiveCamera( 75, element.offsetWidth / element.offsetHeight, 0.1, 1000 );
-        let camera = new THREE.PerspectiveCamera( 70, this.element.offsetWidth / this.element.offsetHeight, 1, 5000 );
-        camera.position.z = 1000;
-        scene.add( camera );
-
-        let light = new THREE.DirectionalLight( 0xffffff, 0.8 );
-        light.position.set( 1, 1, 1 );
-        scene.add( light );
-
-        let light2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
-        light2.position.set( -1, -1, 1 );
-        scene.add( light2 );
-
-        let root = new THREE.Group();
-        scene.add( root );
-
-        let renderer = new THREE.WebGLRenderer( { antialias: true } );
-        renderer.setClearColor( 0x050505 );
-        renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( this.element.offsetWidth, this.element.offsetHeight );
-        console.log(this.element.offsetWidth, this.element.offsetHeight);
-        this.element.appendChild( renderer.domElement );
-
-        this.loadMolecule('caffeine', root);
-
-        function render() {
-            requestAnimationFrame( render );
-            renderer.render( scene, camera );
-        }
-        render();*/
     }
 
     public animate() {
@@ -116,7 +79,7 @@ export class VisorComponent implements OnInit{
 
     loadMolecule(moleculeId){
         while ( this.rootGroup.children.length > 0 ) {
-            var object = this.rootGroup.children[ 0 ];
+            let object = this.rootGroup.children[ 0 ];
             object.parent.remove( object );
         }
 
