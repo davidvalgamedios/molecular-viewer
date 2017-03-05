@@ -7,6 +7,6 @@
 
 declare namespace THREE {
     export class IcosahedronBufferGeometry extends THREE.Geometry {
-        constructor(radius:any,detail:any);
+        constructor(radius: number,detail:number);
     }
 }
