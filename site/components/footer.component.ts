@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'home',
+    selector: 'footer',
     template: `
-        HOLA
+        Footer
     `
 })
-export class TerrainComponent{
-
+export class FooterComponent {
 
     constructor(){
-
     }
+
 }

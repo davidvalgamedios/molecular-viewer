@@ -4,7 +4,11 @@ import { HttpModule }       from '@angular/http';
 import { RouterModule }     from '@angular/router';
 
 import { AppComponent }     from './pages/app.component';
-import { TerrainComponent } from "./pages/terrain.component";
+import { EditorPageComponent } from "./pages/editor-page.component";
+import {FooterComponent} from "./components/footer.component";
+import {LibraryComponent} from "./components/library.component";
+import {VisorComponent} from "./components/visor.component";
+import {MoleculesService} from "./services/molecules.service";
 
 
 @NgModule({
@@ -14,17 +18,13 @@ import { TerrainComponent } from "./pages/terrain.component";
         HttpModule,
         RouterModule.forRoot([
             {
-                path: 'room/:terrainId',
-                component: TerrainComponent
-            },
-            {
                 path: '',
-                component: TerrainComponent
+                component: EditorPageComponent
             }
         ])
     ],
-    declarations: [ AppComponent, TerrainComponent],
+    declarations: [ AppComponent, EditorPageComponent, LibraryComponent, VisorComponent, FooterComponent],
     bootstrap:    [ AppComponent ],
-    providers: [ ]
+    providers: [ MoleculesService ]
 })
 export class AppModule {}

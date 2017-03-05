@@ -24,7 +24,7 @@
             '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
             'socket.io-client': 'npm:socket.io-client/dist/socket.io.js',
             'angular2-uuid': 'npm:angular2-uuid/index.js',
-
+            'three': 'npm:three/build/three.js',
             // other libraries
             'rxjs':                      'npm:rxjs'
         },

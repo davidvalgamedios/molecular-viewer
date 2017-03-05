@@ -48,6 +48,7 @@
     "rxjs": "5.0.3",
     "socket.io": "^1.7.3",
     "systemjs": "0.19.x",
+    "three": "^0.84.0",
     "typescript": "2.1.x",
     "typings": "2.0.x",
     "zone.js": "0.7.x"
