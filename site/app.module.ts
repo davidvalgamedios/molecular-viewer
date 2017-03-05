@@ -9,6 +9,7 @@ import {FooterComponent} from "./components/footer.component";
 import {LibraryComponent} from "./components/library.component";
 import {VisorComponent} from "./components/visor.component";
 import {MoleculesService} from "./services/molecules.service";
+import {EditorService} from "./services/editor.service";
 
 
 @NgModule({
@@ -25,6 +26,6 @@ import {MoleculesService} from "./services/molecules.service";
     ],
     declarations: [ AppComponent, EditorPageComponent, LibraryComponent, VisorComponent, FooterComponent],
     bootstrap:    [ AppComponent ],
-    providers: [ MoleculesService ]
+    providers: [ MoleculesService, EditorService ]
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import {Component, OnInit, RootRenderer} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as THREE from 'three';
 import WebGLRenderer = THREE.WebGLRenderer;
 import Scene = THREE.Scene;
@@ -6,6 +6,8 @@ import TrackballControls = THREE.TrackballControls;
 import PerspectiveCamera = THREE.PerspectiveCamera;
 import Mesh = THREE.Mesh;
 import Group = THREE.Group;
+import {MoleculesService} from "../services/molecules.service";
+import {EditorService} from "../services/editor.service";
 
 @Component({
     selector: 'visor',
@@ -20,19 +22,26 @@ export class VisorComponent implements OnInit{
     private camera: PerspectiveCamera;
     private renderer: WebGLRenderer;
 
-    constructor(){
+    constructor(private moleculesService:MoleculesService, private editorService:EditorService){
         this.initPDBLoader();
         this.initCSS2DRenderer();
+
+        this.editorService.moleculeLoadSbj$.subscribe(
+            molecule => {
+                this.loadMolecule(molecule);
+                //this.history.push(`${astronaut} confirmed the mission`);
+            });
     }
 
     ngOnInit(){
-        this.container = document.getElementById( 'canvas' );
+        this.container = document.getElementById('canvas');
         const width = this.container.offsetWidth;
         const height = this.container.offsetHeight;
 
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(75, width/height);
-        this.camera.position.set(0, 0, 100);
+
+        this.camera = new THREE.PerspectiveCamera( 70, width / height, 1, 5000 );
+        this.camera.position.set(0, 0, 1000);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -47,15 +56,17 @@ export class VisorComponent implements OnInit{
 
 
         //Insert here molecules
-        this.loadMolecule('caffeine');
+        //this.loadMolecule('caffeine');
 
         // Lights
-        const ambientLight = new THREE.AmbientLight(0xcccccc);
-        this.scene.add(ambientLight);
 
-        const pointLight = new THREE.PointLight(0xffffff);
-        pointLight.position.set(300, 0, 300);
-        this.scene.add(pointLight);
+        let light = new THREE.DirectionalLight( 0xffffff, 0.8 );
+        light.position.set( 1, 1, 1 );
+        this.scene.add( light );
+
+        let light2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+        light2.position.set( -1, -1, 1 );
+        this.scene.add( light2 );
 
         this.animate();
         /*
@@ -94,7 +105,6 @@ export class VisorComponent implements OnInit{
     }
 
     public animate() {
-        console.log("ANIMATING");
         window.requestAnimationFrame(_ => this.animate());
 
         /*this.stats.update();
@@ -105,7 +115,12 @@ export class VisorComponent implements OnInit{
     }
 
     loadMolecule(moleculeId){
-        var loader = new THREE.PDBLoader();
+        while ( this.rootGroup.children.length > 0 ) {
+            var object = this.rootGroup.children[ 0 ];
+            object.parent.remove( object );
+        }
+
+        let loader = new THREE.PDBLoader();
         loader.load(
             // resource URL
             'dist/models/'+moleculeId+'.pdb',
@@ -174,7 +189,7 @@ export class VisorComponent implements OnInit{
             object.position.lerp( end, 0.5 );
             object.scale.set( 5, 5, start.distanceTo( end ) );
             object.lookAt( end );
-            this.scene.add( object );
+            this.rootGroup.add( object );
         }
     }
 
