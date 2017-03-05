@@ -1,7 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, RootRenderer} from '@angular/core';
 import * as THREE from 'three';
-
+import WebGLRenderer = THREE.WebGLRenderer;
 import Scene = THREE.Scene;
+import TrackballControls = THREE.TrackballControls;
+import PerspectiveCamera = THREE.PerspectiveCamera;
+import Mesh = THREE.Mesh;
+import Group = THREE.Group;
 
 @Component({
     selector: 'visor',
@@ -10,7 +14,11 @@ import Scene = THREE.Scene;
     `
 })
 export class VisorComponent implements OnInit{
-    element;
+    private container: HTMLElement;
+    private rootGroup: Group;
+    private scene: Scene;
+    private camera: PerspectiveCamera;
+    private renderer: WebGLRenderer;
 
     constructor(){
         this.initPDBLoader();
@@ -18,9 +26,41 @@ export class VisorComponent implements OnInit{
     }
 
     ngOnInit(){
-        this.element = document.getElementById( 'canvas' );
-        let scene = new THREE.Scene();
+        this.container = document.getElementById( 'canvas' );
+        const width = this.container.offsetWidth;
+        const height = this.container.offsetHeight;
 
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(75, width/height);
+        this.camera.position.set(0, 0, 100);
+
+        this.renderer = new THREE.WebGLRenderer({antialias: true});
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setSize(width, height);
+        this.renderer.setClearColor(0x050505);
+
+        this.container.appendChild(this.renderer.domElement);
+
+        //Root Group
+        this.rootGroup = new THREE.Group();
+        this.scene.add( this.rootGroup );
+
+
+        //Insert here molecules
+        this.loadMolecule('caffeine');
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xcccccc);
+        this.scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xffffff);
+        pointLight.position.set(300, 0, 300);
+        this.scene.add(pointLight);
+
+        this.animate();
+        /*
+
+        let scene = new THREE.Scene();
         //let camera = new THREE.PerspectiveCamera( 75, element.offsetWidth / element.offsetHeight, 0.1, 1000 );
         let camera = new THREE.PerspectiveCamera( 70, this.element.offsetWidth / this.element.offsetHeight, 1, 5000 );
         camera.position.z = 1000;
@@ -50,10 +90,21 @@ export class VisorComponent implements OnInit{
             requestAnimationFrame( render );
             renderer.render( scene, camera );
         }
-        render();
+        render();*/
     }
 
-    loadMolecule(moleculeId, scene){
+    public animate() {
+        console.log("ANIMATING");
+        window.requestAnimationFrame(_ => this.animate());
+
+        /*this.stats.update();
+        this.controls.update();
+        TWEEN.update();*/
+
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    loadMolecule(moleculeId){
         var loader = new THREE.PDBLoader();
         loader.load(
             // resource URL
@@ -61,7 +112,7 @@ export class VisorComponent implements OnInit{
             // Function when resource is loaded
             ( geometry, geometryBonds, json ) => {
                 //console.log( 'This molecule has ' + json.atoms.length + ' atoms' );
-                this.parseMoleculeData(geometry, geometryBonds, json, scene);
+                this.parseMoleculeData(geometry, geometryBonds, json);
             },
             // Function called when download progresses
             function ( xhr ) {
@@ -74,7 +125,7 @@ export class VisorComponent implements OnInit{
         );
     }
 
-    parseMoleculeData(geometry, geometryBonds, json, scene){
+    parseMoleculeData(geometry, geometryBonds, json){
         var boxGeometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
         var sphereGeometry = new THREE.IcosahedronBufferGeometry( 1, 2 );
         var offset = geometry.center();
@@ -96,7 +147,7 @@ export class VisorComponent implements OnInit{
             object.position.copy( position );
             object.position.multiplyScalar( 75 );
             object.scale.multiplyScalar( 25 );
-            scene.add( object );
+            this.rootGroup.add( object );
             var atom = json.atoms[ i ];
             var text = document.createElement( 'div' );
             text.className = 'label';
@@ -104,7 +155,7 @@ export class VisorComponent implements OnInit{
             text.textContent = atom[ 4 ];
             var label = new THREE.CSS2DObject( text );
             label.position.copy( object.position );
-            scene.add( label );
+            this.rootGroup.add( label );
         }
         positions = geometryBonds.getAttribute( 'position' );
         var start = new THREE.Vector3();
@@ -123,7 +174,7 @@ export class VisorComponent implements OnInit{
             object.position.lerp( end, 0.5 );
             object.scale.set( 5, 5, start.distanceTo( end ) );
             object.lookAt( end );
-            scene.add( object );
+            this.scene.add( object );
         }
     }
 
