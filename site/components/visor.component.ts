@@ -72,6 +72,7 @@ export class VisorComponent implements OnInit{
         this.controls.maxDistance = 2000;
 
         this.animate();
+        window.addEventListener('resize', _ => this.onResize());
     }
 
     public animate() {
@@ -82,6 +83,16 @@ export class VisorComponent implements OnInit{
         TWEEN.update();*/
 
         this.renderer.render(this.scene, this.camera);
+    }
+
+    public onResize() {
+        const width = window.innerWidth;
+        const height = window.innerHeight - 90;
+
+        this.camera.aspect = width / height;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize(width, height);
     }
 
     loadMolecule(moleculeId){
