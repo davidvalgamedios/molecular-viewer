@@ -14,14 +14,14 @@ import {EditorService} from "../services/editor.service";
     `
 })
 export class LibraryComponent {
-    moleculeList;
-    loadedMolecules;
+    moleculeList:any;
+    loadedMolecules:any;
 
     constructor(private moleculesService:MoleculesService, private editorService:EditorService){
         this.moleculeList = this.moleculesService.getMoleculesList();
     }
 
-    loadMolecule(moleculeId){
+    loadMolecule(moleculeId:string){
         this.editorService.sendLoadMolecule(moleculeId);
     }
 }
