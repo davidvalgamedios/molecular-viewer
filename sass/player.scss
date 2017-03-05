@@ -1,0 +1,108 @@
+.player{
+  z-index: 10;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left:0;
+  transition: top  0.25s linear, left 0.25s linear;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &.blue{
+    filter: hue-rotate(100deg);
+  }
+
+  &.purple{
+    filter: hue-rotate(150deg);
+  }
+
+  &.red{
+    filter: hue-rotate(250deg);
+  }
+
+  &.yellow{
+    filter: hue-rotate(300deg);
+  }
+
+
+  &.w{
+    background-image: url("/dist/img/player/up.png");
+  }
+  &.s{
+    background-image: url("/dist/img/player/down.png");
+  }
+  &.a{
+    background-image: url("/dist/img/player/left.png");
+  }
+  &.d{
+    background-image: url("/dist/img/player/right.png");
+  }
+
+  .swordC{
+    position: relative;
+    width: 18%;
+    height: 180%;
+    top: -40%;
+    left: 42%;
+    transition:transform 0.15s;
+    display: none;
+
+    &.atk{
+      display: block;
+    }
+
+    div{
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#afafaf+0,1c1c1c+49,afafaf+100 */
+      background: #afafaf; /* Old browsers */
+      background: -moz-linear-gradient(left,  #afafaf 0%, #1c1c1c 49%, #afafaf 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(left,  #afafaf 0%,#1c1c1c 49%,#afafaf 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to right,  #afafaf 0%,#1c1c1c 49%,#afafaf 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#afafaf', endColorstr='#afafaf',GradientType=1 ); /* IE6-9 */
+
+
+      height: 37%;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+
+  &.s{
+    .swordC{
+      transform: rotate(-90deg);
+      &.swing{
+        transform: rotate(0deg);
+      }
+    }
+  }
+
+  &.d{
+    .swordC{
+      transform: rotate(-180deg);
+      &.swing{
+        transform: rotate(-90deg);
+      }
+    }
+  }
+
+  &.a{
+    .swordC{
+      transform: rotate(180deg);
+      &.swing{
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &.w{
+    .swordC{
+      transform: rotate(90deg);
+      &.swing{
+        transform: rotate(180deg);
+      }
+    }
+  }
+}

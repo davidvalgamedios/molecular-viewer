@@ -1,0 +1,11 @@
+body{
+  margin: 0;
+}
+
+.referencePoint{
+  position: fixed;
+  height: 50px;
+  width: 50px;
+  right: calc(50vw - 25px);
+  top: calc(40vh - 25px);
+}

@@ -1,0 +1,12 @@
+{
+  "ignore": [
+    "site/*.js",
+    "site/**/*.js",
+
+    "build/*.js",
+    "build/**/*.js",
+
+    "aot/*.js",
+    "aot/**/*.js"
+  ]
+}

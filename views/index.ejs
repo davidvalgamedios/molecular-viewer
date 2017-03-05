@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Angular2 Boilerplate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <base href="/">
+    <% if (env == 'dev') { %>
+    <link href="/dist/css/site-dev.css" type="text/css" rel="stylesheet">
+    <% } else{ %>
+    <link href="/dist/css/site.css" type="text/css" rel="stylesheet">
+    <% } %>
+</head>
+<body>
+<boilerplate>Loading...</boilerplate>
+<% if (env == 'dev') { %>
+<script src="/dist/vendor/zone.min.js"></script>
+<script src="/dist/vendor/Reflect.min.js"></script>
+<script src="/node_modules/systemjs/dist/system.src.js"></script>
+<script>
+    System.import('/dist/systemjs.config.js').then(function () {
+        System.import('build');
+    }).catch(console.error.bind(console));
+</script>
+<% } else{ %>
+<script src="/dist/js/site-bundle.js"></script>
+<% } %>
+</body>
+</html>
