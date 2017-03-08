@@ -17,9 +17,9 @@ var server = http.createServer(app);
 if(env == 'prod'){
     app.use(compression());
 }
-else{
-    app.use("/node_modules", express.static(__dirname + '/node_modules'));
-}
+
+app.use("/node_modules", express.static(__dirname + '/node_modules'));
+
 
 // routes ======================================================================
 app.set('view engine', 'ejs');

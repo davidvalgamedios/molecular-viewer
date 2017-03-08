@@ -1,13 +1,4 @@
-/// <reference path="../definitions/three-pdbloader.d.ts" />
-/// <reference path="../definitions/three-icosahedronbuffergeometry.d.ts" />
 import {Component, OnInit} from '@angular/core';
-import * as THREE from 'three';
-import WebGLRenderer = THREE.WebGLRenderer;
-import Scene = THREE.Scene;
-import TrackballControls = THREE.TrackballControls;
-import PerspectiveCamera = THREE.PerspectiveCamera;
-import Mesh = THREE.Mesh;
-import Group = THREE.Group;
 import {MoleculesService} from "../services/molecules.service";
 import {EditorService} from "../services/editor.service";
 
@@ -19,11 +10,11 @@ import {EditorService} from "../services/editor.service";
 })
 export class VisorComponent implements OnInit{
     private container: HTMLElement;
-    private rootGroup: Group;
-    private scene: Scene;
-    private camera: PerspectiveCamera;
-    private renderer: WebGLRenderer;
-    private controls:TrackballControls;
+    private rootGroup: THREE.Group;
+    private scene: THREE.Scene;
+    private camera: THREE.PerspectiveCamera;
+    private renderer: THREE.WebGLRenderer;
+    private controls:THREE.TrackballControls;
 
     constructor(private moleculesService:MoleculesService, private editorService:EditorService){
         //this.initCSS2DRenderer();
