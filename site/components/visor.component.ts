@@ -25,8 +25,8 @@ export class VisorComponent implements OnInit{
 
     ngOnInit(){
         this.container = document.getElementById('canvas');
-        const width = this.container.offsetWidth;
-        const height = this.container.offsetHeight;
+        let width = this.container.offsetWidth;
+        let height = this.container.offsetHeight;
 
         this.scene = new THREE.Scene();
 

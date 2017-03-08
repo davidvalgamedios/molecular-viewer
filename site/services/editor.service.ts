@@ -3,6 +3,7 @@ import { Subject }    from 'rxjs/Subject';
 
 @Injectable()
 export class EditorService {
+    private loadedMolecules = [];
     // Observable sources
     private loadMoleculeSbj = new Subject<string>();
 
@@ -17,6 +18,13 @@ export class EditorService {
 
     // Service message commands
     sendLoadMolecule(moleculeId: string){
+        this.loadedMolecules.push(moleculeId);
         this.loadMoleculeSbj.next(moleculeId);
+        console.log(this.loadedMolecules);
+    }
+
+
+    getLoadedMolecules(){
+        return this.loadedMolecules;
     }
 }
