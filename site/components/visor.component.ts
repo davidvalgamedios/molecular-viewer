@@ -17,8 +17,6 @@ export class VisorComponent implements OnInit{
     private controls:THREE.TrackballControls;
 
     constructor(private moleculesService:MoleculesService, private editorService:EditorService){
-        //this.initCSS2DRenderer();
-
         this.editorService.moleculeLoadSbj$.subscribe(
             molecule => {
                 this.loadMolecule(molecule);
@@ -120,6 +118,7 @@ export class VisorComponent implements OnInit{
         var colors = geometry.getAttribute( 'color' );
         var position = new THREE.Vector3();
         var color = new THREE.Color();
+
         for ( var i = 0; i < positions.count; i ++ ) {
             position.x = positions.getX( i );
             position.y = positions.getY( i );
@@ -128,7 +127,7 @@ export class VisorComponent implements OnInit{
             color.g = colors.getY( i );
             color.b = colors.getZ( i );
             var element = geometry.elements[ i ];
-            var material = new THREE.MeshPhongMaterial( );
+            var material = new THREE.MeshPhongMaterial( {color:color.getHex()} );
             var object = new THREE.Mesh( sphereGeometry, material );
             object.position.copy( position );
             object.position.multiplyScalar( 75 );
@@ -139,10 +138,11 @@ export class VisorComponent implements OnInit{
             text.className = 'label';
             text.style.color = 'rgb(' + atom[ 3 ][ 0 ] + ',' + atom[ 3 ][ 1 ] + ',' + atom[ 3 ][ 2 ] + ')';
             text.textContent = atom[ 4 ];
-            /*var label = new THREE.CSS2DObject( text );
-            label.position.copy( object.position );
-            this.rootGroup.add( label );*/
+            //var label = new THREE.CSS2DObject( text );
+            //label.position.copy( object.position );
+            //this.rootGroup.add( label );
         }
+
         positions = geometryBonds.getAttribute( 'position' );
         var start = new THREE.Vector3();
         var end = new THREE.Vector3();
@@ -164,108 +164,12 @@ export class VisorComponent implements OnInit{
         }
     }
 
-    /*private initCSS2DRenderer(){
+    private componentToHex(c:number):string {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
 
-        THREE.CSS2DObject = function ( element ) {
-
-            THREE.Object3D.call( this );
-
-            this.element = element;
-            this.element.style.position = 'absolute';
-
-            this.addEventListener( 'removed', function ( event ) {
-
-                if ( this.element.parentNode !== null ) {
-
-                    this.element.parentNode.removeChild( this.element );
-
-                }
-
-            } );
-
-        };
-
-        THREE.CSS2DObject.prototype = Object.create( THREE.Object3D.prototype );
-        THREE.CSS2DObject.prototype.constructor = THREE.CSS2DObject;
-
-//
-
-        THREE.CSS2DRenderer = function () {
-
-            console.log( 'THREE.CSS2DRenderer', THREE.REVISION );
-
-            var _width, _height;
-            var _widthHalf, _heightHalf;
-
-            var vector = new THREE.Vector3();
-            var viewMatrix = new THREE.Matrix4();
-            var viewProjectionMatrix = new THREE.Matrix4();
-
-            var domElement = document.createElement( 'div' );
-            domElement.style.overflow = 'hidden';
-
-            this.domElement = domElement;
-
-            this.setSize = function ( width, height ) {
-
-                _width = width;
-                _height = height;
-
-                _widthHalf = _width / 2;
-                _heightHalf = _height / 2;
-
-                domElement.style.width = width + 'px';
-                domElement.style.height = height + 'px';
-
-            };
-
-            var renderObject = function ( object, camera ) {
-
-                if ( object instanceof THREE.CSS2DObject ) {
-
-                    vector.setFromMatrixPosition( object.matrixWorld );
-                    vector.applyMatrix4( viewProjectionMatrix );
-
-                    var element = object.element;
-                    var style = 'translate(-50%,-50%) translate(' + ( vector.x * _widthHalf + _widthHalf ) + 'px,' + ( - vector.y * _heightHalf + _heightHalf ) + 'px)';
-
-                    element.style.WebkitTransform = style;
-                    element.style.MozTransform = style;
-                    element.style.oTransform = style;
-                    element.style.transform = style;
-
-                    if ( element.parentNode !== domElement ) {
-
-                        domElement.appendChild( element );
-
-                    }
-
-                }
-
-                for ( var i = 0, l = object.children.length; i < l; i ++ ) {
-
-                    renderObject( object.children[ i ], camera );
-
-                }
-
-            };
-
-            this.render = function ( scene, camera ) {
-
-                scene.updateMatrixWorld();
-
-                if ( camera.parent === null ) camera.updateMatrixWorld();
-
-                camera.matrixWorldInverse.getInverse( camera.matrixWorld );
-
-                viewMatrix.copy( camera.matrixWorldInverse.getInverse( camera.matrixWorld ) );
-                viewProjectionMatrix.multiplyMatrices( camera.projectionMatrix, viewMatrix );
-
-                renderObject( scene, camera );
-
-            };
-
-        };
-
-    }*/
+    private rgbToHex(r:number, g:number, b:number):string {
+        return "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+    }
 }
