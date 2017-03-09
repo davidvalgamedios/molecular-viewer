@@ -3,9 +3,9 @@ import { Subject }    from 'rxjs/Subject';
 
 @Injectable()
 export class EditorService {
-    private loadedMolecules = [];
+    private loadedMolecules:any = [];
     // Observable sources
-    private loadMoleculeSbj = new Subject<string>();
+    private loadMoleculeSbj:Subject<string> = new Subject<string>();
 
     // Observable  streams
     moleculeLoadSbj$ = this.loadMoleculeSbj.asObservable();

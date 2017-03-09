@@ -1,7 +1,10 @@
+/// <reference path="../definitions/three-pdbloader.d.ts" />
+/// <reference path="../definitions/three-icosahedronbuffergeometry.d.ts" />
 import {Component, OnInit, HostListener} from '@angular/core';
 import {MoleculesService} from "../services/molecules.service";
 import {EditorService} from "../services/editor.service";
 import {ProjectService} from "../services/project.service";
+import * as THREE from 'three';
 
 @Component({
     selector: 'visor',
@@ -49,7 +52,7 @@ export class VisorComponent implements OnInit{
     }
 
     @HostListener('mousedown', ['$event'])
-    onMousedown(event) {
+    onMousedown(event:MouseEvent) {
         this.mouseDown = true;
         this.last = event;
     }
@@ -143,7 +146,7 @@ export class VisorComponent implements OnInit{
     }
 
     parseMoleculeData(geometry:any, geometryBonds:any, json:any){
-        let lim = {
+        let lim:any = {
             minX:null,
             maxX:null,
             minY:null,

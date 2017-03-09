@@ -65,7 +65,7 @@ export class ProjectAssetsComponent {
 
     }
 
-    sendEditorSignal(signal){
+    sendEditorSignal(signal:string){
         this.editorCommands.emit(signal);
     }
 }

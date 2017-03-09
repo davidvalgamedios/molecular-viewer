@@ -40,7 +40,7 @@ export class EditorMessageHelperComponent{
         };
     }
 
-    getMsgData(dataId){
+    getMsgData(dataId:string){
         if(this.msgId &&
             this.msgData.hasOwnProperty(this.msgId) &&
             this.msgData[this.msgId].hasOwnProperty(dataId)){
@@ -48,7 +48,7 @@ export class EditorMessageHelperComponent{
         }
     }
 
-    sendCommandSignal(signal){
+    sendCommandSignal(signal:string){
         this.editorCommands.emit(signal);
     }
 }

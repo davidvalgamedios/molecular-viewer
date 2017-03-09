@@ -28,7 +28,7 @@ export class BackgroundsService {
         return this.backgroundList;
     }
 
-    getBackgroundData(backgroundId){
+    getBackgroundData(backgroundId:string){
         for(let data of this.backgroundList){
             if(data.id == backgroundId){
                 return data;

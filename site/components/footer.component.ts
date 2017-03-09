@@ -11,7 +11,7 @@ import {EditorService} from "../services/editor.service";
     `
 })
 export class FooterComponent {
-    loadedMolecules;
+    loadedMolecules:any;
     constructor(private editorService:EditorService){
         this.loadedMolecules = editorService.getLoadedMolecules();
     }

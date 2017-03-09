@@ -48,7 +48,7 @@ export class EditorPageComponent{
         this.projectNameEditor = this.projectCfgCopy.projectName;
         this.isEditingProjectName = true;
     }
-    finishEdit(event){
+    finishEdit(event:any){
         if(event.code == 'Enter'){
             this.isEditingProjectName = false;
             this.projectService.updateProjectName(this.projectNameEditor);
@@ -68,13 +68,13 @@ export class EditorPageComponent{
     openBackgroundSelection(){
         this.isSelectingBackground = true;
     }
-    setBackground(backgroundId){
+    setBackground(backgroundId:string){
         this.isSelectingBackground = false;
         if(backgroundId !== 'closePopup'){
             this.projectService.updateBackground(backgroundId);
         }
     }
-    addMolecule(moleculeId){
+    addMolecule(moleculeId:string){
         this.isAddingMolecule = false;
         if(moleculeId !== 'closePopup'){
             this.projectService.addMolecule(moleculeId);
@@ -82,7 +82,7 @@ export class EditorPageComponent{
     }
 
 
-    parseEditorCommand(signal){
+    parseEditorCommand(signal:string){
         if(signal == 'editBackground'){
             this.isSelectingBackground = true;
         }
