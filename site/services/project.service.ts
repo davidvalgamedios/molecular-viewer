@@ -7,6 +7,7 @@ export class ProjectService {
     constructor(){
         this.projectCfg = {
             projectName: 'Proyecto de prueba',
+            background: null
         }
     }
 

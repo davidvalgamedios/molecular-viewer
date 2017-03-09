@@ -25,20 +25,27 @@ editor{
     display: block;
     height: 100px;
   }
-}
 
-input{
-  display: inline-block;
-  vertical-align: middle;
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.25;
-  color: #464a4c;
-  background-color: #fff;
-  background-image: none;
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  .explanation{
+    padding: 50px;
+    text-align: center;
+    flex-direction: column;
+
+    .big{
+      font-size: 30px;
+      padding-bottom: 20px;
+    }
+    .med{
+      font-size: 20px;
+      padding-bottom: 15px;
+    }
+    .small{
+      font-size: 15px;
+      color: #909090;
+      padding-top: 15px;
+    }
+    .action{
+      padding: 20px 0;
+    }
+  }
 }

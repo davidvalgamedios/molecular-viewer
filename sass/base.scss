@@ -1,8 +1,15 @@
 body{
   margin: 0;
   font-family: "Helvetica Neue", sans-serif;
+  color: #292B2C;
 }
 
 *{
   box-sizing: border-box;
+}
+
+.flxCntr{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
