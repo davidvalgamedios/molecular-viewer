@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {MoleculesService} from "../services/molecules.service";
 import {EditorService} from "../services/editor.service";
 import {ProjectService} from "../services/project.service";
@@ -18,13 +18,41 @@ export class VisorComponent implements OnInit{
 
     private width:number;
     private height:number;
-    private controls:THREE.TrackballControls;
+    //private controls:THREE.TrackballControls;
+
+    private mouseDown:boolean = false;
+    private last: MouseEvent;
 
     constructor(private moleculesService:MoleculesService, private editorService:EditorService, private projectService:ProjectService){
         this.editorService.moleculeLoadSbj$.subscribe(
             molecule => {
                 this.loadMolecule(molecule);
             });
+    }
+
+
+    @HostListener('mouseup')
+    onMouseup() {
+        this.mouseDown = false;
+    }
+
+    @HostListener('mousemove', ['$event'])
+    onMousemove(event: MouseEvent) {
+        if(this.mouseDown) {
+            this.rootGroup.rotateX((this.last.clientX - event.clientX)/100);
+            this.rootGroup.rotateY((this.last.clientY - event.clientY)/100);
+            /*this.scene.rotate(
+                event.clientX - this.last.clientX,
+                event.clientY - this.last.clientY
+            );*/
+            this.last = event;
+        }
+    }
+
+    @HostListener('mousedown', ['$event'])
+    onMousedown(event) {
+        this.mouseDown = true;
+        this.last = event;
     }
 
     ngOnInit(){
@@ -60,7 +88,7 @@ export class VisorComponent implements OnInit{
         this.scene.add( light2 );
 
         //Controls
-        this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
+        //this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
         //this.controls.minDistance = 500;
         //this.controls.maxDistance = 2000;
 
@@ -75,7 +103,7 @@ export class VisorComponent implements OnInit{
 
     public animate() {
         window.requestAnimationFrame(_ => this.animate());
-        this.controls.update();
+        //this.controls.update();
 
         /*
 
@@ -205,7 +233,6 @@ export class VisorComponent implements OnInit{
             object.lookAt( end );
             this.rootGroup.add( object );
         }
-        this.rootGroup.position.x -= 200;
-        console.log(lim);
+        //this.rootGroup.position.x -= 200;
     }
 }
