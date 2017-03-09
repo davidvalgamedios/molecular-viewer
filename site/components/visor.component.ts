@@ -18,7 +18,6 @@ export class VisorComponent implements OnInit{
 
     private width:number;
     private height:number;
-    //private controls:THREE.TrackballControls;
 
     private mouseDown:boolean = false;
     private last: MouseEvent;
@@ -87,10 +86,6 @@ export class VisorComponent implements OnInit{
         light2.position.set( -1, -1, 1 );
         this.scene.add( light2 );
 
-        //Controls
-        //this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
-        //this.controls.minDistance = 500;
-        //this.controls.maxDistance = 2000;
 
         this.animate();
         window.addEventListener('resize', _ => this.onResize());
@@ -103,8 +98,6 @@ export class VisorComponent implements OnInit{
 
     public animate() {
         window.requestAnimationFrame(_ => this.animate());
-        //this.controls.update();
-
         /*
 
         this.stats.update();
