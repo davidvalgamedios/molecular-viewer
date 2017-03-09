@@ -77,7 +77,7 @@ export class EditorPageComponent{
     addMolecule(moleculeId){
         this.isAddingMolecule = false;
         if(moleculeId !== 'closePopup'){
-            //this.projectService.addMolecule(moleculeId);
+            this.projectService.addMolecule(moleculeId);
         }
     }
 

@@ -9,30 +9,34 @@ import {ProjectService} from "../services/project.service";
     template: `
         <div class="box">
             <div class="header">
-                Fondo <i class="fa fa-pencil" (click)="sendEditBackgroundSignal()"></i>
+                Fondo <i class="fa fa-pencil" (click)="sendEditorSignal('editBackground')"></i>
             </div>
             <div class="elem background" *ngIf="isBackgroundSelected()"
             [style.background-image]="'url(/dist/img/backgrounds/'+getBackgroundData('img')+')'">
                 {{getBackgroundData('name')}}
             </div>
-            <div class="elem italic center" *ngIf="!isBackgroundSelected()">
+            <div class="elem empty" *ngIf="!isBackgroundSelected()">
                 Sin fondo
             </div>
         </div>
         
         <div class="box" *ngIf="isBackgroundSelected()">
             <div class="header">
-                Celulas <i class="fa fa-pencil"></i>
+                Moléculas <i class="fa fa-plus" (click)="sendEditorSignal('addMolecule')"></i>
             </div>
-            <div class="elem">
-                Celulas
+            <div *ngIf="isAnyMolecule()">
+                <div class="elem" *ngFor="let sMol of projectCfgCopy.molecules">
+                   {{sMol}}
+                </div>
+            </div>
+            <div *ngIf="!isAnyMolecule()" class="elem empty">
+                Ninguna molécula
             </div>
         </div>
     `
 })
 export class ProjectAssetsComponent {
     projectCfgCopy:any;
-    backgroundData:any = null;
 
     @Output() editorCommands: EventEmitter<string> = new EventEmitter<string>();
 
@@ -47,15 +51,21 @@ export class ProjectAssetsComponent {
     isBackgroundSelected(){
         return this.projectCfgCopy.hasOwnProperty('background') && this.projectCfgCopy.background !== null;
     }
-    getBackgroundData(dataId){
+    getBackgroundData(dataId:string){
         if(this.isBackgroundSelected()){
             let backgroundData = this.backgroundsService.getBackgroundData(this.projectCfgCopy.background);
 
             return backgroundData[dataId];
         }
     }
+    isAnyMolecule(){
+        return this.projectCfgCopy.hasOwnProperty('molecules') && this.projectCfgCopy.molecules.length != 0;
+    }
+    getMoleculeData(dataId:string){
 
-    sendEditBackgroundSignal(){
-        this.editorCommands.emit('editBackground');
+    }
+
+    sendEditorSignal(signal){
+        this.editorCommands.emit(signal);
     }
 }

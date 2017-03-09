@@ -46,6 +46,13 @@ project-assets{
         background-position: center center;
         background-repeat: no-repeat;
       }
+
+      &.empty{
+        font-style: italic;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 300;
+      }
     }
   }
 }

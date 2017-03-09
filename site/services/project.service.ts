@@ -15,7 +15,8 @@ export class ProjectService {
         else{
             this.projectCfg = {
                 projectName: 'Proyecto de prueba',
-                background: null
+                background: null,
+                molecules: []
             }
         }
     }
@@ -32,6 +33,17 @@ export class ProjectService {
     updateBackground(backgroundId:string){
         this.projectCfg.background = backgroundId;
         this.saveChangesLocally();
+    }
+
+    addMolecule(moleculeId:string){
+        if(!this.projectCfg.hasOwnProperty('molecules')){
+            this.projectCfg.molecules = [];
+        }
+
+        if(this.projectCfg.molecules.length < 2 && this.projectCfg.molecules.indexOf(moleculeId) === -1){
+            this.projectCfg.molecules.push(moleculeId);
+            this.saveChangesLocally();
+        }
     }
 
 
