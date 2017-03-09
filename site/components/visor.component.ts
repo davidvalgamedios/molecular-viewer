@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MoleculesService} from "../services/molecules.service";
 import {EditorService} from "../services/editor.service";
+import {ProjectService} from "../services/project.service";
 
 @Component({
     selector: 'visor',
@@ -17,9 +18,9 @@ export class VisorComponent implements OnInit{
 
     private width:number;
     private height:number;
-    //private controls:THREE.TrackballControls;
+    private controls:THREE.TrackballControls;
 
-    constructor(private moleculesService:MoleculesService, private editorService:EditorService){
+    constructor(private moleculesService:MoleculesService, private editorService:EditorService, private projectService:ProjectService){
         this.editorService.moleculeLoadSbj$.subscribe(
             molecule => {
                 this.loadMolecule(molecule);
@@ -33,14 +34,14 @@ export class VisorComponent implements OnInit{
 
         this.scene = new THREE.Scene();
 
-        this.camera = new THREE.OrthographicCamera(this.width / - 2, this.width / 2, this.height / 2, this.height / - 2, - 500, 1000);
+        this.camera = new THREE.OrthographicCamera(this.width / - 2, this.width / 2, this.height / 2, this.height / - 2, 0.1, 2000);
         this.camera.position.set(0, 0, 1000);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true, alpha:true});
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.width, this.height);
-        //this.renderer.setClearColor(0x050505);
-        this.renderer.setClearColor(0xFFFFFF);
+        this.renderer.setClearColor(0x050505);
+        //this.renderer.setClearColor(0xFFFFFF);
 
         this.container.appendChild(this.renderer.domElement);
 
@@ -59,20 +60,25 @@ export class VisorComponent implements OnInit{
         this.scene.add( light2 );
 
         //Controls
-        /*this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
-        this.controls.minDistance = 500;
-        this.controls.maxDistance = 2000;*/
+        this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
+        //this.controls.minDistance = 500;
+        //this.controls.maxDistance = 2000;
 
         this.animate();
         window.addEventListener('resize', _ => this.onResize());
+        let molecules = this.projectService.getMolecules();
+        for(let moleculeId of molecules){
+            this.loadMolecule(moleculeId);
+            return;
+        }
     }
 
     public animate() {
         window.requestAnimationFrame(_ => this.animate());
-
+        this.controls.update();
 
         /*
-        this.controls.update();
+
         this.stats.update();
         TWEEN.update();*/
 

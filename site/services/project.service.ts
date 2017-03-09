@@ -25,6 +25,15 @@ export class ProjectService {
         return this.projectCfg;
     }
 
+    getMolecules():any{
+        if(this.projectCfg.hasOwnProperty('molecules') && this.projectCfg.molecules.length != 0){
+            return this.projectCfg.molecules;
+        }
+        else{
+            return [];
+        }
+    }
+
     updateProjectName(newName:string){
         this.projectCfg.projectName = newName;
         this.saveChangesLocally();
