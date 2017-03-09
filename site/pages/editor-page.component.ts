@@ -25,12 +25,14 @@ import {ProjectService} from "../services/project.service";
         </div>
         <!--<footer></footer>-->
         <background-selector *ngIf="isSelectingBackground" (backgroundSelected)="setBackground($event)"></background-selector>
+        <molecules-selector *ngIf="isAddingMolecule" (moleculeSelected)="addMolecule($event)"></molecules-selector>
     `
 })
 export class EditorPageComponent{
     isEditingProjectName:boolean = false;
     projectNameEditor:string;
     isSelectingBackground:boolean = false;
+    isAddingMolecule:boolean = false;
 
     @Output() editorCommands: EventEmitter<string> = new EventEmitter<string>();
     @Output() backgroundSelected: EventEmitter<string> = new EventEmitter<string>();
@@ -72,11 +74,20 @@ export class EditorPageComponent{
             this.projectService.updateBackground(backgroundId);
         }
     }
+    addMolecule(moleculeId){
+        this.isAddingMolecule = false;
+        if(moleculeId !== 'closePopup'){
+            //this.projectService.addMolecule(moleculeId);
+        }
+    }
 
 
     parseEditorCommand(signal){
         if(signal == 'editBackground'){
             this.isSelectingBackground = true;
+        }
+        else if(signal == 'addMolecule'){
+            this.isAddingMolecule = true;
         }
     }
 }

@@ -34,7 +34,7 @@ export class EditorMessageHelperComponent{
                 big: '¡Genial!',
                 med: 'Ahora que ya tienes un fondo ¿Añadimos algunas moléculas?',
                 actionText: 'Añadir moléculas',
-                actionSignal: 'editMolecules',
+                actionSignal: 'addMolecule',
                 small: 'Psst. Todos tus cambios se guardarán automáticamente en tu ordenador. Solo recuerda guardar antes de irte.'
             }
         };
