@@ -7,7 +7,7 @@ import {ProjectService} from "../services/project.service";
         <div class="navbar">
             <span class="title" (click)="editProjectName()">
                 <div *ngIf="!isEditingProjectName">
-                    {{projectCfg.projectName}} <i class="fa fa-pencil"></i>
+                    {{projectCfgCopy.projectName}} <i class="fa fa-pencil"></i>
                 </div>
                 <div *ngIf="isEditingProjectName">
                     <input size="20" [(ngModel)]="projectNameEditor" (keypress)="finishEdit($event)">
@@ -42,15 +42,15 @@ export class EditorPageComponent{
 
     @Output() backgroundSelected: EventEmitter<string> = new EventEmitter<string>();
 
-    projectCfg:any;
+    projectCfgCopy:any;
 
 
     constructor(private projectService:ProjectService){
-        this.projectCfg = projectService.getProjectConfig();
+        this.projectCfgCopy = projectService.getProjectConfig();
     }
 
     editProjectName(){
-        this.projectNameEditor = this.projectCfg.projectName;
+        this.projectNameEditor = this.projectCfgCopy.projectName;
         this.isEditingProjectName = true;
     }
     finishEdit(event){
@@ -61,7 +61,7 @@ export class EditorPageComponent{
     }
 
     isNewEmptyProject(){
-        return !this.projectCfg.hasOwnProperty('background') || this.projectCfg.background === null;
+        return !this.projectCfgCopy.hasOwnProperty('background') || this.projectCfgCopy.background === null;
     }
 
     openBackgroundSelection(){
