@@ -1,8 +1,16 @@
+@import 'base-colors';
+
 .btn{
-  background-color: #2561d1;
+  background-color: $accentColor;
   color: white;
   padding: 10px 15px;
   border-radius: 4px;
   display: inline-block;
   cursor: pointer;
+
+  &.disabled{
+    background-color: #cecece;
+    pointer-events: none;
+    cursor: default;
+  }
 }

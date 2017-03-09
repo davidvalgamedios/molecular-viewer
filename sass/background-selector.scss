@@ -1,0 +1,68 @@
+@import 'base-colors';
+
+background-selector{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .content{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .backSelector{
+    display: inline-block;
+    margin: 10px 5px;
+    border: 1px solid #b9b9b9;
+    cursor: pointer;
+
+    .actual{
+      display: none;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(66, 66, 66, 0.5);
+
+      .fa{
+        color: white;
+        font-size: 50px;
+      }
+    }
+
+    &:hover{
+      background-color: $primaryColor;
+      border-color: $primaryColor;
+      color: white;
+    }
+
+    &.selected{
+      background-color: #00c853;
+      border-color: #43a047;
+      color: white;
+    }
+
+    &.selected{
+      .actual{
+        display: flex;
+      }
+    }
+
+    .img{
+      position: relative;
+      width: 150px;
+      height: 125px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .label{
+      padding: 5px 0;
+      text-align: center;
+    }
+  }
+}

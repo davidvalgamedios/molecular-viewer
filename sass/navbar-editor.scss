@@ -1,6 +1,8 @@
+@import 'base-colors';
+
 .navbar{
   padding: 7px 14px;
-  background-color: #3097D1;
+  background-color: $primaryColor;
   text-align: center;
   color: white;
 

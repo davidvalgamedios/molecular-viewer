@@ -13,6 +13,8 @@ import {MoleculesService} from "./services/molecules.service";
 import {EditorService} from "./services/editor.service";
 import {ProjectAssetsComponent} from "./components/project-assets.component";
 import {ProjectService} from "./services/project.service";
+import {BackgroundSelectorComponent} from "./components/background-selector.component";
+import {BackgroundsService} from "./services/backgrounds.service";
 
 
 
@@ -28,8 +30,8 @@ import {ProjectService} from "./services/project.service";
             }
         ])
     ],
-    declarations: [ AppComponent, EditorPageComponent, LibraryComponent, VisorComponent, FooterComponent, ProjectAssetsComponent],
+    declarations: [ AppComponent, EditorPageComponent, LibraryComponent, VisorComponent, FooterComponent, ProjectAssetsComponent, BackgroundSelectorComponent],
     bootstrap:    [ AppComponent ],
-    providers: [ MoleculesService, EditorService, ProjectService]
+    providers: [ MoleculesService, EditorService, ProjectService, BackgroundsService]
 })
 export class AppModule {}

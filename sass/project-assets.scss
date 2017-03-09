@@ -1,3 +1,5 @@
+@import 'base-colors';
+
 project-assets{
   background-color: #f5f8fa;
   display: block;
@@ -23,7 +25,7 @@ project-assets{
       font-weight: bold;
       color: white;
       font-size: 15px;
-      background-color: #3097D1;
+      background-color: $primaryColor;
       cursor: pointer;
 
       .fa{
