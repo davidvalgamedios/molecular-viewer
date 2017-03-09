@@ -26,17 +26,10 @@ project-assets{
       color: white;
       font-size: 15px;
       background-color: $primaryColor;
-      cursor: pointer;
 
       .fa{
+        cursor: pointer;
         float: right;
-        visibility: hidden;
-      }
-
-      &:hover{
-        .fa{
-          visibility: visible;
-        }
       }
     }
 

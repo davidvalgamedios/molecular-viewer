@@ -15,7 +15,7 @@ import {ProjectService} from "../services/project.service";
             </span>
         </div>
         <div class="editor">
-            <project-assets></project-assets>
+            <project-assets (editorCommands)="parseEditorCommand($event)"></project-assets>
             <div class="mainContainer" *ngIf="!isNewEmptyProject()">
                 <visor></visor>
             </div>
@@ -51,6 +51,7 @@ export class EditorPageComponent{
     projectNameEditor:string;
     isSelectingBackground:boolean = false;
 
+    @Output() editorCommands: EventEmitter<string> = new EventEmitter<string>();
     @Output() backgroundSelected: EventEmitter<string> = new EventEmitter<string>();
 
     projectCfgCopy:any;
@@ -82,6 +83,13 @@ export class EditorPageComponent{
         this.isSelectingBackground = false;
         if(backgroundId !== 'closePopup'){
             this.projectService.updateBackground(backgroundId);
+        }
+    }
+
+
+    parseEditorCommand(signal){
+        if(signal == 'editBackground'){
+            this.isSelectingBackground = true;
         }
     }
 }

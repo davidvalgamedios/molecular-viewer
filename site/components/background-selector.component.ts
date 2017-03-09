@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import {BackgroundsService} from "../services/backgrounds.service";
+import {ProjectService} from "../services/project.service";
 
 @Component({
     selector: 'background-selector',
@@ -32,7 +33,11 @@ export class BackgroundSelectorComponent {
 
     @Output() backgroundSelected: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private backgroundsService:BackgroundsService){
+    constructor(private backgroundsService:BackgroundsService, private projectService:ProjectService){
+        let projectData = this.projectService.getProjectConfig();
+        if(projectData.hasOwnProperty('background') && projectData['background'] !== null){
+            this.actualBackground = projectData['background'];
+        }
         this.allBackgrounds = backgroundsService.getBackgrounds();
     }
 

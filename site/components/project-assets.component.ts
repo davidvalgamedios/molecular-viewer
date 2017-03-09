@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import {MoleculesService} from "../services/molecules.service";
 import {EditorService} from "../services/editor.service";
 import {BackgroundsService} from "../services/backgrounds.service";
@@ -9,7 +9,7 @@ import {ProjectService} from "../services/project.service";
     template: `
         <div class="box">
             <div class="header">
-                Fondo <i class="fa fa-pencil"></i>
+                Fondo <i class="fa fa-pencil" (click)="sendEditBackgroundSignal()"></i>
             </div>
             <div class="elem background" *ngIf="isBackgroundSelected()"
             [style.background-image]="'url(/dist/img/backgrounds/'+getBackgroundData('img')+')'">
@@ -34,6 +34,8 @@ export class ProjectAssetsComponent {
     projectCfgCopy:any;
     backgroundData:any = null;
 
+    @Output() editorCommands: EventEmitter<string> = new EventEmitter<string>();
+
     constructor(
         private moleculesService:MoleculesService,
         private editorService:EditorService,
@@ -55,4 +57,7 @@ export class ProjectAssetsComponent {
         }
     }
 
+    sendEditBackgroundSignal(){
+        this.editorCommands.emit('editBackground');
+    }
 }
