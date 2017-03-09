@@ -4,7 +4,7 @@ import {Component, OnInit, HostListener} from '@angular/core';
 import {MoleculesService} from "../services/molecules.service";
 import {EditorService} from "../services/editor.service";
 import {ProjectService} from "../services/project.service";
-import * as THREE from 'three';
+//import * as THREE from 'three';
 
 @Component({
     selector: 'visor',
@@ -110,13 +110,13 @@ export class VisorComponent implements OnInit{
     }
 
     public onResize() {
-        const width = window.innerWidth;
-        const height = window.innerHeight - 90;
+        this.width = this.container.offsetWidth;
+        this.height = this.container.offsetHeight;
 
         //this.camera.aspect = width / height;
         this.camera.updateProjectionMatrix();
 
-        this.renderer.setSize(width, height);
+        this.renderer.setSize(this.width, this.height);
     }
 
     loadMolecule(moleculeId:string){
