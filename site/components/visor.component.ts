@@ -12,9 +12,12 @@ export class VisorComponent implements OnInit{
     private container: HTMLElement;
     private rootGroup: THREE.Group;
     private scene: THREE.Scene;
-    private camera: THREE.PerspectiveCamera;
+    private camera: THREE.OrthographicCamera;
     private renderer: THREE.WebGLRenderer;
-    private controls:THREE.TrackballControls;
+
+    private width:number;
+    private height:number;
+    //private controls:THREE.TrackballControls;
 
     constructor(private moleculesService:MoleculesService, private editorService:EditorService){
         this.editorService.moleculeLoadSbj$.subscribe(
@@ -25,18 +28,19 @@ export class VisorComponent implements OnInit{
 
     ngOnInit(){
         this.container = document.getElementById('canvas');
-        let width = this.container.offsetWidth;
-        let height = this.container.offsetHeight;
+        this.width = this.container.offsetWidth;
+        this.height = this.container.offsetHeight;
 
         this.scene = new THREE.Scene();
 
-        this.camera = new THREE.PerspectiveCamera( 70, width / height, 1, 5000 );
+        this.camera = new THREE.OrthographicCamera(this.width / - 2, this.width / 2, this.height / 2, this.height / - 2, - 500, 1000);
         this.camera.position.set(0, 0, 1000);
 
-        this.renderer = new THREE.WebGLRenderer({antialias: true});
+        this.renderer = new THREE.WebGLRenderer({antialias: true, alpha:true});
         this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.setSize(width, height);
-        this.renderer.setClearColor(0x050505);
+        this.renderer.setSize(this.width, this.height);
+        //this.renderer.setClearColor(0x050505);
+        this.renderer.setClearColor(0xFFFFFF);
 
         this.container.appendChild(this.renderer.domElement);
 
@@ -55,9 +59,9 @@ export class VisorComponent implements OnInit{
         this.scene.add( light2 );
 
         //Controls
-        this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
+        /*this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
         this.controls.minDistance = 500;
-        this.controls.maxDistance = 2000;
+        this.controls.maxDistance = 2000;*/
 
         this.animate();
         window.addEventListener('resize', _ => this.onResize());
@@ -65,9 +69,11 @@ export class VisorComponent implements OnInit{
 
     public animate() {
         window.requestAnimationFrame(_ => this.animate());
-        this.controls.update();
 
-        /*this.stats.update();
+
+        /*
+        this.controls.update();
+        this.stats.update();
         TWEEN.update();*/
 
         this.renderer.render(this.scene, this.camera);
@@ -77,7 +83,7 @@ export class VisorComponent implements OnInit{
         const width = window.innerWidth;
         const height = window.innerHeight - 90;
 
-        this.camera.aspect = width / height;
+        //this.camera.aspect = width / height;
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize(width, height);
@@ -110,6 +116,15 @@ export class VisorComponent implements OnInit{
     }
 
     parseMoleculeData(geometry:any, geometryBonds:any, json:any){
+        let lim = {
+            minX:null,
+            maxX:null,
+            minY:null,
+            maxY:null,
+            minZ:null,
+            maxZ:null
+        };
+
         var boxGeometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
         var sphereGeometry = new THREE.IcosahedronBufferGeometry( 1, 2 );
         var offset = geometry.center();
@@ -123,6 +138,28 @@ export class VisorComponent implements OnInit{
             position.x = positions.getX( i );
             position.y = positions.getY( i );
             position.z = positions.getZ( i );
+
+            if(position.x > lim.maxX || lim.maxX == null){
+                lim.maxX = position.x;
+            }
+            if(position.x < lim.minX || lim.minX == null){
+                lim.minX = position.x;
+            }
+            if(position.y > lim.maxY || lim.maxY == null){
+                lim.maxY = position.y;
+            }
+            if(position.y < lim.minY || lim.minY == null){
+                lim.minY = position.y;
+            }
+            if(position.z > lim.maxZ || lim.maxZ == null){
+                lim.maxZ = position.z;
+            }
+            if(position.z < lim.minZ || lim.minZ == null){
+                lim.minZ = position.z;
+            }
+
+
+
             color.r = colors.getX( i );
             color.g = colors.getY( i );
             color.b = colors.getZ( i );
@@ -133,11 +170,11 @@ export class VisorComponent implements OnInit{
             object.position.multiplyScalar( 75 );
             object.scale.multiplyScalar( 25 );
             this.rootGroup.add( object );
-            var atom = json.atoms[ i ];
-            var text = document.createElement( 'div' );
-            text.className = 'label';
-            text.style.color = 'rgb(' + atom[ 3 ][ 0 ] + ',' + atom[ 3 ][ 1 ] + ',' + atom[ 3 ][ 2 ] + ')';
-            text.textContent = atom[ 4 ];
+            //var atom = json.atoms[ i ];
+            //var text = document.createElement( 'div' );
+            //text.className = 'label';
+            //text.style.color = 'rgb(' + atom[ 3 ][ 0 ] + ',' + atom[ 3 ][ 1 ] + ',' + atom[ 3 ][ 2 ] + ')';
+            //text.textContent = atom[ 4 ];
             //var label = new THREE.CSS2DObject( text );
             //label.position.copy( object.position );
             //this.rootGroup.add( label );
@@ -162,14 +199,7 @@ export class VisorComponent implements OnInit{
             object.lookAt( end );
             this.rootGroup.add( object );
         }
-    }
-
-    private componentToHex(c:number):string {
-        var hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
-    }
-
-    private rgbToHex(r:number, g:number, b:number):string {
-        return "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+        this.rootGroup.position.x -= 200;
+        console.log(lim);
     }
 }

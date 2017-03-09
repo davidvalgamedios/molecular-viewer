@@ -1,0 +1,55 @@
+project-assets{
+  background-color: #f5f8fa;
+  display: block;
+  min-width: 250px;
+  padding: 15px;
+
+  .box{
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border: 1px solid #d0d0d0;
+
+    &:last-child{
+      margin-bottom: 0;
+    }
+
+    .header, .elem{
+      padding: 10px;
+    }
+
+    .header{
+      font-weight: bold;
+      color: white;
+      font-size: 15px;
+      background-color: #3097D1;
+      cursor: pointer;
+
+      .fa{
+        float: right;
+        visibility: hidden;
+      }
+
+      &:hover{
+        .fa{
+          visibility: visible;
+        }
+      }
+    }
+
+    .elem{
+      &.background{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        min-height: 75px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-image: url(/dist/img/backgrounds/blood.jpg);
+      }
+    }
+  }
+}

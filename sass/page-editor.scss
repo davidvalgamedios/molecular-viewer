@@ -1,11 +1,44 @@
-.editor{
+editor{
+  min-height: 100vh;
   display: flex;
-  height: calc(100% - 150px);
+  flex-direction: column;
+
+  .navbar{
+    flex: 0;
+  }
+
+  .editor{
+    flex:1;
+    display: flex;
+    project-assets{
+      flex: 0;
+    }
+    .mainContainer{
+      flex: 1;
+      background-color: #b6b7b7;
+      text-align: center;
+    }
+  }
+
+  footer{
+    flex: 0;
+    display: block;
+    height: 100px;
+  }
 }
 
-footer{
-  display: block;
-  background-color: #1c1c1c;
-  height: 150px;
-  color: white;
+input{
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #464a4c;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }

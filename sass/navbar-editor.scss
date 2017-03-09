@@ -1,0 +1,24 @@
+.navbar{
+  padding: 7px 14px;
+  background-color: #3097D1;
+  text-align: center;
+  color: white;
+
+  .title{
+    cursor: pointer;
+    line-height: 30px;
+    font-size: 20px;
+    font-weight: 300;
+
+    .fa-pencil{
+      margin-left: 5px;
+      visibility: hidden;
+    }
+
+    &:hover{
+      .fa-pencil{
+        visibility: visible;
+      }
+    }
+  }
+}
