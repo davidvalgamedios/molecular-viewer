@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {ProjectService} from "../services/project.service";
 
 @Component({
@@ -24,7 +24,7 @@ import {ProjectService} from "../services/project.service";
                 <div class="big">¡Hola! Parece que este proyecto está vacio.</div>
                 <div class="med">¿Que te parece si empezamos por añadir un fondo?</div>
                 <div class="action">
-                    <div class="btn" (click)="selectBackground()">
+                    <div class="btn" (click)="openBackgroundSelection()">
                         Añadir fondo <i class="fa fa-plus-circle"></i>
                     </div>
                 </div>
@@ -32,12 +32,15 @@ import {ProjectService} from "../services/project.service";
             </div>
         </div>
         <!--<footer></footer>-->
-        <background-selector></background-selector>
+        <background-selector *ngIf="isSelectingBackground" (backgroundSelected)="setBackground($event)"></background-selector>
     `
 })
 export class EditorPageComponent{
     isEditingProjectName:boolean = false;
     projectNameEditor:string;
+    isSelectingBackground:boolean = false;
+
+    @Output() backgroundSelected: EventEmitter<string> = new EventEmitter<string>();
 
     projectCfg:any;
 
@@ -61,7 +64,13 @@ export class EditorPageComponent{
         return !this.projectCfg.hasOwnProperty('background') || this.projectCfg.background === null;
     }
 
-    selectBackground(){
-
+    openBackgroundSelection(){
+        this.isSelectingBackground = true;
+    }
+    setBackground(backgroundId){
+        this.isSelectingBackground = false;
+        if(backgroundId !== 'closePopup'){
+            this.projectService.updateBackground(backgroundId);
+        }
     }
 }

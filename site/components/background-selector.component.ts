@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {EditorService} from "../services/editor.service";
+import { Component, Output, EventEmitter } from '@angular/core';
 import {BackgroundsService} from "../services/backgrounds.service";
 
 @Component({
@@ -8,11 +7,11 @@ import {BackgroundsService} from "../services/backgrounds.service";
         <div class="blur"></div>
         <div class="popupContainer">
             <div class="header">
-                Selecciona el fondo <i class="fa fa-close"></i>
+                Selecciona el fondo <i class="fa fa-close" (click)="closePopup()"></i>
             </div>
             <div class="content">
                 <div class="backSelector" *ngFor="let oBack of allBackgrounds" (click)="selectBackground(oBack.id)"
-                    [ngClass]="{'selected':selectedBackground==oBack.id}">
+                    [ngClass]="{'selected':actualBackground==oBack.id}">
                     <div class="img" [style.background-image]="'url(/dist/img/backgrounds/'+oBack.img+')'">
                         <div class="actual flxCntr">
                             <i class="fa fa-check"></i>
@@ -22,20 +21,32 @@ import {BackgroundsService} from "../services/backgrounds.service";
                 </div>
             </div>
             <div class="footer">
-                <div class="btn" [ngClass]="{'disabled': !selectedBackground}">Elegir</div>
+                <div (click)="sendBackground()" class="btn" [ngClass]="{'disabled': !actualBackground}">Elegir</div>
             </div>
         </div>
     `
 })
 export class BackgroundSelectorComponent {
     allBackgrounds:any;
-    selectedBackground:string;
+    actualBackground:string;
+
+    @Output() backgroundSelected: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(private backgroundsService:BackgroundsService){
         this.allBackgrounds = backgroundsService.getBackgrounds();
     }
 
     selectBackground(backgroundId:string){
-        this.selectedBackground = backgroundId;
+        this.actualBackground = backgroundId;
+    }
+
+    sendBackground(){
+        if(this.actualBackground){
+            this.backgroundSelected.emit(this.actualBackground);
+        }
+    }
+
+    closePopup(){
+        this.backgroundSelected.emit('closePopup');
     }
 }

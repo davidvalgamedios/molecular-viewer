@@ -18,4 +18,8 @@ export class ProjectService {
     updateProjectName(newName:string){
         this.projectCfg.projectName = newName;
     }
+
+    updateBackground(backgroundId:string){
+        this.projectCfg.background = backgroundId;
+    }
 }

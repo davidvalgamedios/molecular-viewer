@@ -24,8 +24,9 @@
     background-color: $primaryColor;
     color: white;
 
-    .fa{
+    .fa-close{
       float: right;
+      cursor: pointer;
     }
   }
 
