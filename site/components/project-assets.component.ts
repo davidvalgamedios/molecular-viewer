@@ -49,11 +49,9 @@ export class ProjectAssetsComponent {
     }
     getBackgroundData(dataId){
         if(this.isBackgroundSelected()){
-            if(this.backgroundData === null){
-                this.backgroundData = this.backgroundsService.getBackgroundData(this.projectCfgCopy.background);
-            }
+            let backgroundData = this.backgroundsService.getBackgroundData(this.projectCfgCopy.background);
 
-            return this.backgroundData[dataId];
+            return backgroundData[dataId];
         }
     }
 

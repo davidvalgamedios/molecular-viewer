@@ -16,31 +16,12 @@ import {ProjectService} from "../services/project.service";
         </div>
         <div class="editor">
             <project-assets (editorCommands)="parseEditorCommand($event)"></project-assets>
-            <div class="mainContainer" *ngIf="!isNewEmptyProject()">
+            <div class="mainContainer" *ngIf="mustShowCanvas()">
                 <visor></visor>
             </div>
             
-            <div *ngIf="isNewEmptyProject()" class="explanation flxCntr">
-                <div class="big">Parece que este proyecto está vacio.</div>
-                <div class="med">¿Que te parece si empezamos por añadir un fondo?</div>
-                <div class="action">
-                    <div class="btn" (click)="openBackgroundSelection()">
-                        Añadir fondo <i class="fa fa-plus-circle"></i>
-                    </div>
-                </div>
-                <div class="small">(Podrás cambiarlo más tarde si no te gusta)</div>
-            </div>
-            
-            <div *ngIf="isNewEmptyProject()" class="explanation flxCntr">
-                <div class="big">¡Genial!</div>
-                <div class="med">Ahora que ya tienes un fondo ¿Añadimos algunas moléculas?</div>
-                <div class="action">
-                    <div class="btn" (click)="openBackgroundSelection()">
-                        Añadir moléculas <i class="fa fa-plus-circle"></i>
-                    </div>
-                </div>
-                <div class="small">Psst. Todos tus cambios se guardarán automáticamente en tu ordenador. Solo recuerda guardar antes de irte.</div>
-            </div>
+            <msg-helper *ngIf="isNewEmptyProject()" [msgId]="'emptyProject'" (editorCommands)="parseEditorCommand($event)"></msg-helper>
+            <msg-helper *ngIf="!isNewEmptyProject() && hasNoMolecules()" [msgId]="'noMolecules'" (editorCommands)="parseEditorCommand($event)"></msg-helper>
         </div>
         <!--<footer></footer>-->
         <background-selector *ngIf="isSelectingBackground" (backgroundSelected)="setBackground($event)"></background-selector>
@@ -74,6 +55,12 @@ export class EditorPageComponent{
 
     isNewEmptyProject(){
         return !this.projectCfgCopy.hasOwnProperty('background') || this.projectCfgCopy.background === null;
+    }
+    hasNoMolecules(){
+        return !this.projectCfgCopy.hasOwnProperty('molecules') || this.projectCfgCopy.molecules.length == 0;
+    }
+    mustShowCanvas(){
+        return !this.isNewEmptyProject() && !this.hasNoMolecules();
     }
 
     openBackgroundSelection(){

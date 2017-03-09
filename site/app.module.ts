@@ -15,6 +15,7 @@ import {ProjectAssetsComponent} from "./components/project-assets.component";
 import {ProjectService} from "./services/project.service";
 import {BackgroundSelectorComponent} from "./components/background-selector.component";
 import {BackgroundsService} from "./services/backgrounds.service";
+import {EditorMessageHelperComponent} from "./components/editor-message-helper.component";
 
 
 
@@ -30,7 +31,7 @@ import {BackgroundsService} from "./services/backgrounds.service";
             }
         ])
     ],
-    declarations: [ AppComponent, EditorPageComponent, LibraryComponent, VisorComponent, FooterComponent, ProjectAssetsComponent, BackgroundSelectorComponent],
+    declarations: [ AppComponent, EditorPageComponent, LibraryComponent, VisorComponent, FooterComponent, ProjectAssetsComponent, BackgroundSelectorComponent, EditorMessageHelperComponent],
     bootstrap:    [ AppComponent ],
     providers: [ MoleculesService, EditorService, ProjectService, BackgroundsService]
 })

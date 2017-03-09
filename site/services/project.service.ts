@@ -6,7 +6,6 @@ export class ProjectService {
     private projectCfg:any;
 
     constructor(){
-        console.info("CONSTRUCTOR");
         this.projectId = 'demo';
 
         let savedData = localStorage.getItem('prj-'+this.projectId);

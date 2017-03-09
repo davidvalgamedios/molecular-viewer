@@ -6,7 +6,9 @@ editor{
   .navbar{
     flex: 0;
   }
-
+  msg-helper{
+    flex: 1;
+  }
   .editor{
     flex:1;
     display: flex;
@@ -24,28 +26,5 @@ editor{
     flex: 0;
     display: block;
     height: 100px;
-  }
-
-  .explanation{
-    padding: 50px;
-    text-align: center;
-    flex-direction: column;
-
-    .big{
-      font-size: 30px;
-      padding-bottom: 20px;
-    }
-    .med{
-      font-size: 20px;
-      padding-bottom: 15px;
-    }
-    .small{
-      font-size: 15px;
-      color: #909090;
-      padding-top: 15px;
-    }
-    .action{
-      padding: 20px 0;
-    }
   }
 }

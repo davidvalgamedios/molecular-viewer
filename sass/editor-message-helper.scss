@@ -1,0 +1,23 @@
+.explanation{
+  padding: 50px;
+  text-align: center;
+  flex-direction: column;
+  height: 100%;
+
+  .big{
+    font-size: 30px;
+    padding-bottom: 20px;
+  }
+  .med{
+    font-size: 20px;
+    padding-bottom: 15px;
+  }
+  .small{
+    font-size: 15px;
+    color: #909090;
+    padding-top: 15px;
+  }
+  .action{
+    padding: 20px 0;
+  }
+}
