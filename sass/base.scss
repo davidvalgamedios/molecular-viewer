@@ -6,10 +6,19 @@ body{
 
 *{
   box-sizing: border-box;
+  user-select: none;
 }
 
 .flxCntr{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.italic{
+  font-style: italic;
+}
+
+.center{
+  text-align: center;
 }

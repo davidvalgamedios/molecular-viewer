@@ -42,15 +42,16 @@ project-assets{
 
     .elem{
       &.background{
+        font-size: 25px;
+        text-shadow: 0 0 7px black;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        min-height: 75px;
+        color: #f9f9f9;
+        min-height: 50px;
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
-        background-image: url(/dist/img/backgrounds/blood.jpg);
       }
     }
   }
