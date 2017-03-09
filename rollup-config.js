@@ -14,7 +14,7 @@ export default {
         // should intercept ... but doesn't in some rollup versions
         if ( warning.code === 'THIS_IS_UNDEFINED' ) { return; }
         // intercepts in some rollup versions
-        if ( warning.indexOf("The 'this' keyword is equivalent to 'undefined'") > -1 ) { return; }
+        if ( warning.message.indexOf("The 'this' keyword is equivalent to 'undefined'") > -1 ) { return; }
 
         // console.warn everything else
         console.warn( warning.message );
@@ -22,7 +22,10 @@ export default {
     plugins: [
         nodeResolve({jsnext: true, module: true}),
         commonjs({
-            include: 'node_modules/rxjs/**'
+            include: 'node_modules/rxjs/**',
+            namedExports: {
+                'node_modules/three/examples/js/loaders/PDBLoader.js':['PDBLoader', 'THREE.PDBLoader']
+            }
         }),
         uglify()
     ]
