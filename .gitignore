@@ -1,6 +1,5 @@
-dist/css/*
-!dist/css/site.css
+dist/css/site-dev.css
 dist/js/*
-!dist/js/site-all.js
+!dist/js/site-bundle.js
 build
 typings
