@@ -92,11 +92,31 @@ export class VisorComponent implements OnInit{
 
         this.animate();
         window.addEventListener('resize', _ => this.onResize());
+
+        this.loadBackground();
+
         let molecules = this.projectService.getMolecules();
         for(let moleculeId of molecules){
             this.loadMolecule(moleculeId);
             return;
         }
+    }
+
+    private loadBackground(){
+        let textureLoader = new THREE.TextureLoader();
+        textureLoader.load(
+            '/dist/img/backgrounds/blood.jpg',
+            (texture) => {
+                let imgMaterial = new THREE.MeshBasicMaterial({
+                    map: texture
+                });
+                let planeSize = this.calculateBackgroundSize(texture.image.naturalWidth, texture.image.naturalHeight)
+                let plane = new THREE.Mesh(new THREE.PlaneGeometry(planeSize.width, planeSize.height), imgMaterial);
+                plane.position.set(0, 0, -1000);
+
+                this.scene.add(plane);
+            }
+        );
     }
 
     public animate() {
@@ -135,11 +155,11 @@ export class VisorComponent implements OnInit{
                 this.parseMoleculeData(geometry, geometryBonds, json);
             },
             // Function called when download progresses
-            function ( xhr ) {
+            function (  ) {
                 //console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
             },
             // Function called when download errors
-            function ( xhr ) {
+            function (  ) {
                 console.log( 'An error happened' );
             }
         );
@@ -155,16 +175,16 @@ export class VisorComponent implements OnInit{
             maxZ:null
         };
 
-        var boxGeometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
-        var sphereGeometry = new THREE.IcosahedronBufferGeometry( 1, 2 );
-        var offset = geometry.center();
+        let boxGeometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
+        let sphereGeometry = new THREE.IcosahedronBufferGeometry( 1, 2 );
+        let offset = geometry.center();
         geometryBonds.translate( offset.x, offset.y, offset.z );
-        var positions = geometry.getAttribute( 'position' );
-        var colors = geometry.getAttribute( 'color' );
-        var position = new THREE.Vector3();
-        var color = new THREE.Color();
+        let positions = geometry.getAttribute( 'position' );
+        let colors = geometry.getAttribute( 'color' );
+        let position = new THREE.Vector3();
+        let color = new THREE.Color();
 
-        for ( var i = 0; i < positions.count; i ++ ) {
+        for ( let i = 0; i < positions.count; i ++ ) {
             position.x = positions.getX( i );
             position.y = positions.getY( i );
             position.z = positions.getZ( i );
@@ -193,9 +213,9 @@ export class VisorComponent implements OnInit{
             color.r = colors.getX( i );
             color.g = colors.getY( i );
             color.b = colors.getZ( i );
-            var element = geometry.elements[ i ];
-            var material = new THREE.MeshPhongMaterial( {color:color.getHex()} );
-            var object = new THREE.Mesh( sphereGeometry, material );
+            //let element = geometry.elements[ i ];
+            let material = new THREE.MeshPhongMaterial( {color:color.getHex()} );
+            let object = new THREE.Mesh( sphereGeometry, material );
             object.position.copy( position );
             object.position.multiplyScalar( 75 );
             object.scale.multiplyScalar( 25 );
@@ -211,9 +231,9 @@ export class VisorComponent implements OnInit{
         }
 
         positions = geometryBonds.getAttribute( 'position' );
-        var start = new THREE.Vector3();
-        var end = new THREE.Vector3();
-        for ( var i = 0; i < positions.count; i += 2 ) {
+        let start = new THREE.Vector3();
+        let end = new THREE.Vector3();
+        for ( let i = 0; i < positions.count; i += 2 ) {
             start.x = positions.getX( i );
             start.y = positions.getY( i );
             start.z = positions.getZ( i );
@@ -222,7 +242,7 @@ export class VisorComponent implements OnInit{
             end.z = positions.getZ( i + 1 );
             start.multiplyScalar( 75 );
             end.multiplyScalar( 75 );
-            var object = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( 0xffffff ) );
+            let object = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( 0xffffff ) );
             object.position.copy( start );
             object.position.lerp( end, 0.5 );
             object.scale.set( 5, 5, start.distanceTo( end ) );
@@ -230,5 +250,20 @@ export class VisorComponent implements OnInit{
             this.rootGroup.add( object );
         }
         //this.rootGroup.position.x -= 200;
+    }
+
+    private calculateBackgroundSize(imgWidth, imgHeight){
+        if(this.height > this.width){
+            return {
+                width: this.height,
+                height: this.height
+            }
+        }
+        else{
+            return {
+                width: this.width,
+                height: this.width
+            }
+        }
     }
 }
