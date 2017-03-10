@@ -29,9 +29,14 @@ export class ProjectService {
         if(this.projectCfg.hasOwnProperty('molecules') && this.projectCfg.molecules.length != 0){
             return this.projectCfg.molecules;
         }
-        else{
-            return [];
+        return [];
+    }
+    getBackground():string|null{
+        if(this.projectCfg.hasOwnProperty('background')){
+            return this.projectCfg.background;
         }
+
+        return null;
     }
 
     updateProjectName(newName:string){

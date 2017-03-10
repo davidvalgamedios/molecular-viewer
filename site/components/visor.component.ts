@@ -4,6 +4,7 @@ import {Component, OnInit, HostListener} from '@angular/core';
 import {MoleculesService} from "../services/molecules.service";
 import {EditorService} from "../services/editor.service";
 import {ProjectService} from "../services/project.service";
+import {BackgroundsService} from "../services/backgrounds.service";
 //import * as THREE from 'three';
 
 @Component({
@@ -25,7 +26,7 @@ export class VisorComponent implements OnInit{
     private mouseDown:boolean = false;
     private last: MouseEvent;
 
-    constructor(private moleculesService:MoleculesService, private editorService:EditorService, private projectService:ProjectService){
+    constructor(private moleculesService:MoleculesService, private editorService:EditorService, private projectService:ProjectService, private backgroundsService:BackgroundsService){
         this.editorService.moleculeLoadSbj$.subscribe(
             molecule => {
                 this.loadMolecule(molecule);
@@ -93,7 +94,10 @@ export class VisorComponent implements OnInit{
         this.animate();
         window.addEventListener('resize', _ => this.onResize());
 
-        this.loadBackground();
+        let backgroundId = this.projectService.getBackground();
+        if(backgroundId !== null){
+            this.loadBackground(backgroundId);
+        }
 
         let molecules = this.projectService.getMolecules();
         for(let moleculeId of molecules){
@@ -102,10 +106,12 @@ export class VisorComponent implements OnInit{
         }
     }
 
-    private loadBackground(){
+    private loadBackground(backgroundId:string){
+        let backgroundData = this.backgroundsService.getBackgroundData(backgroundId);
+
         let textureLoader = new THREE.TextureLoader();
         textureLoader.load(
-            '/dist/img/backgrounds/blood.jpg',
+            '/dist/img/backgrounds/'+backgroundData.img,
             (texture) => {
                 let imgMaterial = new THREE.MeshBasicMaterial({
                     map: texture
