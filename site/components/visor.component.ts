@@ -42,8 +42,8 @@ export class VisorComponent implements OnInit{
     @HostListener('mousemove', ['$event'])
     onMousemove(event: MouseEvent) {
         if(this.mouseDown) {
-            this.rootGroup.rotateX((this.last.clientX - event.clientX)/100);
-            this.rootGroup.rotateY((this.last.clientY - event.clientY)/100);
+            this.rootGroup.rotateY((event.clientX-this.last.clientX)/100);
+            this.rootGroup.rotateX((event.clientY-this.last.clientY)/100);
             /*this.scene.rotate(
                 event.clientX - this.last.clientX,
                 event.clientY - this.last.clientY
@@ -116,7 +116,7 @@ export class VisorComponent implements OnInit{
                 let imgMaterial = new THREE.MeshBasicMaterial({
                     map: texture
                 });
-                let planeSize = this.calculateBackgroundSize(texture.image.naturalWidth, texture.image.naturalHeight)
+                let planeSize = this.calculateBackgroundSize(texture.image.naturalWidth, texture.image.naturalHeight);
                 let plane = new THREE.Mesh(new THREE.PlaneGeometry(planeSize.width, planeSize.height), imgMaterial);
                 plane.position.set(0, 0, -1000);
 
