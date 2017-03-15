@@ -27,11 +27,11 @@ export class VisorComponent implements OnInit{
     private mouseDown:boolean = false;
     private last: MouseEvent;
 
-    constructor(private moleculesService:MoleculesService, private editorService:EditorService, private projectService:ProjectService, private backgroundsService:BackgroundsService){
-        this.editorService.moleculeLoadSbj$.subscribe(
+    constructor(private moleculesService:MoleculesService, private projectService:ProjectService, private backgroundsService:BackgroundsService){
+        /*this.editorService.moleculeLoadSbj$.subscribe(
             molecule => {
                 this.loadMolecule(molecule);
-            });
+            });*/
     }
 
 

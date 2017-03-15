@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
+import {Subject} from "rxjs";
 
 @Injectable()
 export class ProjectService {
     private projectId:string;
     private projectCfg:any;
+
+    private projectChangesSbj:Subject<string> = new Subject<string>();
+    private changesDetector = this.projectChangesSbj.asObservable();
+
 
     constructor(){
         this.projectId = 'demo';
@@ -47,6 +52,7 @@ export class ProjectService {
     updateBackground(backgroundId:string){
         this.projectCfg.background = backgroundId;
         this.saveChangesLocally();
+        this.projectChangesSbj.next('background');
     }
 
     addMolecule(moleculeId:string){
@@ -57,6 +63,7 @@ export class ProjectService {
         if(this.projectCfg.molecules.length < 2 && this.projectCfg.molecules.indexOf(moleculeId) === -1){
             this.projectCfg.molecules.push(moleculeId);
             this.saveChangesLocally();
+            this.projectChangesSbj.next('molecules');
         }
     }
 
