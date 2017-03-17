@@ -57,7 +57,6 @@ export class ProjectAssetsComponent {
 
         let moleculesId = this.projectService.getMolecules();
         if(moleculesId){
-            console.info(moleculesId);
             this.moleculesData = moleculesId;
         }
     }
