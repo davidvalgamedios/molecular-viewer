@@ -15,6 +15,7 @@ import {MoleculeParserHelper} from "../helpers/molecule-parser.helper";
     `
 })
 export class VisorComponent implements OnInit{
+    private backgroundObj: THREE.Mesh;
     private container: HTMLElement;
     private firstMolecule: THREE.Group;
     private scene: THREE.Scene;
@@ -32,6 +33,9 @@ export class VisorComponent implements OnInit{
             molecule => {
                 this.loadMolecule(molecule);
             });*/
+        this.projectService.changesDetector.subscribe((changed)=>{
+            this.updateProjectValues(changed)
+        });
     }
 
 
@@ -108,6 +112,7 @@ export class VisorComponent implements OnInit{
     }
 
     private loadBackground(backgroundId:string){
+        this.deleteSceneObj('background');
         let backgroundData = this.backgroundsService.getBackgroundData(backgroundId);
 
         let textureLoader = new THREE.TextureLoader();
@@ -118,10 +123,11 @@ export class VisorComponent implements OnInit{
                     map: texture
                 });
                 let planeSize = this.calculateBackgroundSize(texture.image.naturalWidth, texture.image.naturalHeight);
-                let plane = new THREE.Mesh(new THREE.PlaneGeometry(planeSize.width, planeSize.height), imgMaterial);
-                plane.position.set(0, 0, -1000);
+                this.backgroundObj = new THREE.Mesh(new THREE.PlaneGeometry(planeSize.width, planeSize.height), imgMaterial);
+                this.backgroundObj.position.set(0, 0, -1000);
+                this.backgroundObj.userData = {objType:'background'};
 
-                this.scene.add(plane);
+                this.scene.add(this.backgroundObj);
             }
         );
     }
@@ -185,6 +191,23 @@ export class VisorComponent implements OnInit{
             return {
                 width: this.width,
                 height: this.width
+            }
+        }
+    }
+
+    private updateProjectValues(changed:string){
+        if(changed == 'background'){
+            this.loadBackground(this.projectService.getBackground());
+        }
+    }
+
+    private deleteSceneObj(objId){
+        let childrenNum = this.scene.children.length;
+        for(let i = 0; i<childrenNum;i++){
+            let children = this.scene.children[i];
+            if(children.hasOwnProperty('userData') && children.userData.hasOwnProperty('objType') && children.userData.objType == objId){
+                this.scene.children.splice(i, 1);
+                break;
             }
         }
     }
