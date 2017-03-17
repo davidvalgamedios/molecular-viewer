@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Subject} from "rxjs";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class ProjectService {
@@ -7,7 +7,7 @@ export class ProjectService {
     private projectCfg:any;
 
     private projectChangesSbj:Subject<string> = new Subject<string>();
-    private changesDetector = this.projectChangesSbj.asObservable();
+    changesDetector = this.projectChangesSbj.asObservable();
 
 
     constructor(){

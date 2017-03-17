@@ -12,8 +12,8 @@ import {ProjectService} from "../services/project.service";
                 Fondo <i class="fa fa-pencil" (click)="sendEditorSignal('editBackground')"></i>
             </div>
             <div class="elem background" *ngIf="isBackgroundSelected()"
-            [style.background-image]="'url(/dist/img/backgrounds/'+getBackgroundData('img')+')'">
-                {{getBackgroundData('name')}}
+            [style.background-image]="'url(/dist/img/backgrounds/'+backgroundData.img+')'">
+                {{backgroundData.name}}
             </div>
             <div class="elem empty" *ngIf="!isBackgroundSelected()">
                 Sin fondo
@@ -25,7 +25,7 @@ import {ProjectService} from "../services/project.service";
                 Moléculas <i class="fa fa-plus" (click)="sendEditorSignal('addMolecule')"></i>
             </div>
             <div *ngIf="isAnyMolecule()">
-                <div class="elem" *ngFor="let sMol of projectCfgCopy.molecules">
+                <div class="elem" *ngFor="let sMol of moleculesData">
                    {{sMol}}
                 </div>
             </div>
@@ -36,7 +36,8 @@ import {ProjectService} from "../services/project.service";
     `
 })
 export class ProjectAssetsComponent {
-    projectCfgCopy:any;
+    backgroundData:any = null;
+    moleculesData:any = [];
 
     @Output() editorCommands: EventEmitter<string> = new EventEmitter<string>();
 
@@ -45,21 +46,32 @@ export class ProjectAssetsComponent {
         private editorService:EditorService,
         private backgroundsService: BackgroundsService,
         private projectService: ProjectService){
-        this.projectCfgCopy = projectService.getProjectConfig();
+        this.projectService.changesDetector.subscribe((changed)=>{
+            this.updateProjectValues(changed)
+        });
+
+        let backgroundId = this.projectService.getBackground();
+        if(backgroundId){
+            this.backgroundData = this.backgroundsService.getBackgroundData(backgroundId);
+        }
+
+        let moleculesId = this.projectService.getMolecules();
+        if(moleculesId){
+            console.info(moleculesId);
+            this.moleculesData = moleculesId;
+        }
     }
 
     isBackgroundSelected(){
-        return this.projectCfgCopy.hasOwnProperty('background') && this.projectCfgCopy.background !== null;
+        return this.backgroundData != null;
     }
     getBackgroundData(dataId:string){
-        if(this.isBackgroundSelected()){
-            let backgroundData = this.backgroundsService.getBackgroundData(this.projectCfgCopy.background);
-
-            return backgroundData[dataId];
+        if(this.isBackgroundSelected() && this.backgroundData.hasOwnProperty(dataId)){
+            return this.backgroundData[dataId];
         }
     }
     isAnyMolecule(){
-        return this.projectCfgCopy.hasOwnProperty('molecules') && this.projectCfgCopy.molecules.length != 0;
+        return this.moleculesData.length != 0;
     }
     getMoleculeData(dataId:string){
 
@@ -67,5 +79,17 @@ export class ProjectAssetsComponent {
 
     sendEditorSignal(signal:string){
         this.editorCommands.emit(signal);
+    }
+
+    updateProjectValues(changed:string){
+        if(changed == 'background'){
+            let backgroundId = this.projectService.getBackground();
+            if(backgroundId){
+                this.backgroundData = this.backgroundsService.getBackgroundData(backgroundId);
+            }
+            else{
+                this.backgroundData = null;
+            }
+        }
     }
 }
