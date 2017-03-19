@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import {MoleculesService} from "../services/molecules.service";
-import {EditorService} from "../services/editor.service";
 import {BackgroundsService} from "../services/backgrounds.service";
 import {ProjectService} from "../services/project.service";
 
@@ -22,7 +21,7 @@ import {ProjectService} from "../services/project.service";
         
         <div class="box" *ngIf="isBackgroundSelected()">
             <div class="header">
-                Moléculas <i class="fa fa-plus" (click)="sendEditorSignal('addMolecule')"></i>
+                Moléculas <i class="fa fa-plus" *ngIf="moleculesData.length < 2" (click)="sendEditorSignal('addMolecule')"></i>
             </div>
             <div *ngIf="isAnyMolecule()">
                 <div class="elem" *ngFor="let sMol of moleculesData">
@@ -43,7 +42,6 @@ export class ProjectAssetsComponent {
 
     constructor(
         private moleculesService:MoleculesService,
-        private editorService:EditorService,
         private backgroundsService: BackgroundsService,
         private projectService: ProjectService){
         this.projectService.changesDetector.subscribe((changed)=>{

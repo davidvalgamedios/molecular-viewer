@@ -7,10 +7,8 @@ import {FormsModule} from "@angular/forms";
 import { AppComponent }     from './pages/app.component';
 import { EditorPageComponent } from "./pages/editor-page.component";
 import {FooterComponent} from "./components/footer.component";
-import {LibraryComponent} from "./components/library.component";
 import {VisorComponent} from "./components/visor.component";
 import {MoleculesService} from "./services/molecules.service";
-import {EditorService} from "./services/editor.service";
 import {ProjectAssetsComponent} from "./components/project-assets.component";
 import {ProjectService} from "./services/project.service";
 import {BackgroundSelectorComponent} from "./components/background-selector.component";
@@ -32,8 +30,8 @@ import {MoleculesSelectorComponent} from "./components/molecules-selector.compon
             }
         ])
     ],
-    declarations: [ AppComponent, EditorPageComponent, LibraryComponent, VisorComponent, FooterComponent, ProjectAssetsComponent, BackgroundSelectorComponent, EditorMessageHelperComponent, MoleculesSelectorComponent],
+    declarations: [ AppComponent, EditorPageComponent, VisorComponent, FooterComponent, ProjectAssetsComponent, BackgroundSelectorComponent, EditorMessageHelperComponent, MoleculesSelectorComponent],
     bootstrap:    [ AppComponent ],
-    providers: [ MoleculesService, EditorService, ProjectService, BackgroundsService]
+    providers: [ MoleculesService, ProjectService, BackgroundsService]
 })
 export class AppModule {}

@@ -21,7 +21,21 @@ export class ProjectService {
             this.projectCfg = {
                 projectName: 'Proyecto de prueba',
                 background: null,
-                molecules: []
+                molecules: [],
+                initialStep: {
+                    ethanol:{
+                        pos: {
+                            x: 45,
+                            y: 65
+                        },
+                        angle:{
+                            x: 1,
+                            y: 3,
+                            z: 4
+                        }
+                    }
+                },
+                steps: []
             }
         }
     }

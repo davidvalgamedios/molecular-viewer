@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {EditorService} from "../services/editor.service";
 
 @Component({
     selector: 'footer',
@@ -11,9 +10,8 @@ import {EditorService} from "../services/editor.service";
     `
 })
 export class FooterComponent {
-    loadedMolecules:any;
-    constructor(private editorService:EditorService){
-        this.loadedMolecules = editorService.getLoadedMolecules();
+    loadedMolecules:any = [];
+    constructor(){
     }
 
 }
