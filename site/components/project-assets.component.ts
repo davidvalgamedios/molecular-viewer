@@ -26,7 +26,7 @@ import {ProjectService} from "../services/project.service";
             </div>
             <div *ngIf="isAnyMolecule()">
                 <div class="elem" *ngFor="let sMol of moleculesData">
-                   {{sMol}}
+                   {{sMol}} <i class="fa fa-minus" (click)="removeMolecule(sMol)"></i>
                 </div>
             </div>
             <div *ngIf="!isAnyMolecule()" class="elem empty">
@@ -90,5 +90,15 @@ export class ProjectAssetsComponent {
                 this.backgroundData = null;
             }
         }
+        else if(changed == 'molecules'){
+            let moleculesId = this.projectService.getMolecules();
+            if(moleculesId){
+                this.moleculesData = moleculesId;
+            }
+        }
+    }
+
+    removeMolecule(moleculeId){
+        this.projectService.removeMolecule(moleculeId);
     }
 }

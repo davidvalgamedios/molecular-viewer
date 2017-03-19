@@ -2,11 +2,10 @@
 /// <reference path="../definitions/three-icosahedronbuffergeometry.d.ts" />
 import {Component, OnInit, HostListener} from '@angular/core';
 import {MoleculesService} from "../services/molecules.service";
-import {EditorService} from "../services/editor.service";
 import {ProjectService} from "../services/project.service";
 import {BackgroundsService} from "../services/backgrounds.service";
 import {MoleculeParserHelper} from "../helpers/molecule-parser.helper";
-//import * as THREE from 'three';
+import * as THREE from 'three';
 
 @Component({
     selector: 'visor',

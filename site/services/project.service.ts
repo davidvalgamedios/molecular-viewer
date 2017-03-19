@@ -67,6 +67,22 @@ export class ProjectService {
         }
     }
 
+    removeMolecule(moleculeId:string){
+        if(!this.projectCfg.hasOwnProperty('molecules')){
+            this.projectCfg.molecules = [];
+        }
+
+        let moleculeIndex = this.projectCfg.molecules.indexOf(moleculeId);
+        if(moleculeIndex !== -1){
+            this.projectCfg.molecules.splice(moleculeIndex, 1);
+            this.saveChangesLocally();
+            this.projectChangesSbj.next('molecules');
+        }
+        else{
+            console.info('Molecule not found');
+        }
+    }
+
 
     private saveChangesLocally():void{
         localStorage.setItem('prj-'+this.projectId, JSON.stringify(this.projectCfg));
