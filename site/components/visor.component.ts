@@ -5,7 +5,7 @@ import {MoleculesService} from "../services/molecules.service";
 import {ProjectService} from "../services/project.service";
 import {BackgroundsService} from "../services/backgrounds.service";
 import {MoleculeParserHelper} from "../helpers/molecule-parser.helper";
-import * as THREE from 'three';
+//import * as THREE from 'three';
 
 @Component({
     selector: 'visor',

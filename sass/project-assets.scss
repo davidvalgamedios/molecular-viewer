@@ -19,13 +19,6 @@ project-assets{
 
     .header, .elem{
       padding: 10px;
-    }
-
-    .header{
-      font-weight: bold;
-      color: white;
-      font-size: 15px;
-      background-color: $primaryColor;
 
       .fa{
         cursor: pointer;
@@ -33,7 +26,15 @@ project-assets{
       }
     }
 
+    .header{
+      font-weight: bold;
+      color: white;
+      font-size: 15px;
+      background-color: $primaryColor;
+    }
+
     .elem{
+
       &.background{
         font-size: 25px;
         text-shadow: 0 0 7px black;
