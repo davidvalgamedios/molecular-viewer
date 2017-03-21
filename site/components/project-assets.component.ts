@@ -32,6 +32,12 @@ import {ProjectService} from "../services/project.service";
                 Ninguna molécula
             </div>
         </div>
+        
+        <div class="box" *ngIf="isBackgroundSelected() && isAnyMolecule()">
+            <div class="header">
+                Pasos <i class="fa fa-plus"></i>
+            </div>
+        </div>
     `
 })
 export class ProjectAssetsComponent {

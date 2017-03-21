@@ -23,7 +23,7 @@ import {ProjectService} from "../services/project.service";
             <msg-helper *ngIf="isNewEmptyProject()" [msgId]="'emptyProject'" (editorCommands)="parseEditorCommand($event)"></msg-helper>
             <msg-helper *ngIf="!isNewEmptyProject() && hasNoMolecules()" [msgId]="'noMolecules'" (editorCommands)="parseEditorCommand($event)"></msg-helper>
         </div>
-        <!--<footer></footer>-->
+        <events-footer></events-footer>
         <background-selector *ngIf="isSelectingBackground" (backgroundSelected)="setBackground($event)"></background-selector>
         <molecules-selector *ngIf="isAddingMolecule" (moleculeSelected)="addMolecule($event)"></molecules-selector>
     `

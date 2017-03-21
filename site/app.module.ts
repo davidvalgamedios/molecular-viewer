@@ -6,7 +6,6 @@ import {FormsModule} from "@angular/forms";
 
 import { AppComponent }     from './pages/app.component';
 import { EditorPageComponent } from "./pages/editor-page.component";
-import {FooterComponent} from "./components/footer.component";
 import {VisorComponent} from "./components/visor.component";
 import {MoleculesService} from "./services/molecules.service";
 import {ProjectAssetsComponent} from "./components/project-assets.component";
@@ -15,6 +14,7 @@ import {BackgroundSelectorComponent} from "./components/background-selector.comp
 import {BackgroundsService} from "./services/backgrounds.service";
 import {EditorMessageHelperComponent} from "./components/editor-message-helper.component";
 import {MoleculesSelectorComponent} from "./components/molecules-selector.component";
+import {EventsFooterComponent} from "./components/events-footer.component";
 
 
 
@@ -30,7 +30,7 @@ import {MoleculesSelectorComponent} from "./components/molecules-selector.compon
             }
         ])
     ],
-    declarations: [ AppComponent, EditorPageComponent, VisorComponent, FooterComponent, ProjectAssetsComponent, BackgroundSelectorComponent, EditorMessageHelperComponent, MoleculesSelectorComponent],
+    declarations: [ AppComponent, EditorPageComponent, VisorComponent, EventsFooterComponent, ProjectAssetsComponent, BackgroundSelectorComponent, EditorMessageHelperComponent, MoleculesSelectorComponent],
     bootstrap:    [ AppComponent ],
     providers: [ MoleculesService, ProjectService, BackgroundsService]
 })
