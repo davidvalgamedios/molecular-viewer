@@ -17,6 +17,7 @@ export class VisorComponent implements OnInit{
     private backgroundObj: THREE.Mesh;
     private container: HTMLElement;
     private firstMolecule: THREE.Group;
+    private secondMolecule: THREE.Group;
     private scene: THREE.Scene;
     private camera: THREE.OrthographicCamera;
     private renderer: THREE.WebGLRenderer;
@@ -104,9 +105,8 @@ export class VisorComponent implements OnInit{
         }
 
         let molecules = this.projectService.getMolecules();
-        for(let moleculeId of molecules){
-            this.loadMolecule(moleculeId);
-            return;
+        for(let i=0;i<molecules.length;i++){
+            this.loadMolecule(molecules[i], i);
         }
     }
 
@@ -151,12 +151,7 @@ export class VisorComponent implements OnInit{
         this.renderer.setSize(this.width, this.height);
     }
 
-    loadMolecule(moleculeId:string){
-        /*while ( this.rootGroup.children.length > 0 ) {
-            let object = this.rootGroup.children[ 0 ];
-            object.parent.remove( object );
-        }*/
-
+    loadMolecule(moleculeId:string, moleculeOrder:number){
         let loader = new THREE.PDBLoader();
         loader.load(
             // resource URL
@@ -164,8 +159,21 @@ export class VisorComponent implements OnInit{
             // Function when resource is loaded
             ( geometry, geometryBonds, json ) => {
                 //console.log( 'This molecule has ' + json.atoms.length + ' atoms' );
-                this.firstMolecule = MoleculeParserHelper.getMoleculeObject(geometry, geometryBonds, json);
-                this.scene.add(this.firstMolecule);
+                let molecule = MoleculeParserHelper.getMoleculeObject(geometry, geometryBonds, json);
+                let scale = this.calculateObjectScale(molecule);
+
+                molecule.scale.multiplyScalar( scale );
+
+                if(moleculeOrder == 0){
+                    this.firstMolecule = molecule;
+                    molecule.position.setX(-this.width/4);
+                }
+                else{
+                    this.secondMolecule = molecule;
+                    molecule.position.setX(this.width/4);
+                }
+
+                this.scene.add(molecule);
             },
             // Function called when download progresses
             function (  ) {
@@ -209,5 +217,12 @@ export class VisorComponent implements OnInit{
                 break;
             }
         }
+    }
+
+    private calculateObjectScale(molecule:THREE.Group):number{
+        let bbox = new THREE.Box3().setFromObject(molecule);
+        let maxSize = Math.max(bbox.max.x - bbox.min.x, bbox.max.y - bbox.min.y, bbox.max.z - bbox.min.z);
+
+        return (this.width/2)/(maxSize+100);
     }
 }

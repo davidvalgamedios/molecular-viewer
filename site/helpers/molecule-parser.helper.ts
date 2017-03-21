@@ -7,14 +7,6 @@ export class MoleculeParserHelper{
     public static getMoleculeObject(geometry:any, geometryBonds:any, json:any){
         let rootGroup = new THREE.Group();
 
-        let lim:any = {
-            minX:null,
-            maxX:null,
-            minY:null,
-            maxY:null,
-            minZ:null,
-            maxZ:null
-        };
 
         let boxGeometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
         let sphereGeometry = new THREE.IcosahedronBufferGeometry( 1, 2 );
@@ -29,27 +21,6 @@ export class MoleculeParserHelper{
             position.x = positions.getX( i );
             position.y = positions.getY( i );
             position.z = positions.getZ( i );
-
-            if(position.x > lim.maxX || lim.maxX == null){
-                lim.maxX = position.x;
-            }
-            if(position.x < lim.minX || lim.minX == null){
-                lim.minX = position.x;
-            }
-            if(position.y > lim.maxY || lim.maxY == null){
-                lim.maxY = position.y;
-            }
-            if(position.y < lim.minY || lim.minY == null){
-                lim.minY = position.y;
-            }
-            if(position.z > lim.maxZ || lim.maxZ == null){
-                lim.maxZ = position.z;
-            }
-            if(position.z < lim.minZ || lim.minZ == null){
-                lim.minZ = position.z;
-            }
-
-
 
             color.r = colors.getX( i );
             color.g = colors.getY( i );
@@ -90,6 +61,7 @@ export class MoleculeParserHelper{
             object.lookAt( end );
             rootGroup.add( object );
         }
+        rootGroup.userData = {objType:'molecule'};
 
         return rootGroup;
     }
