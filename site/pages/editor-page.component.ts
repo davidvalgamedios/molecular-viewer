@@ -4,16 +4,7 @@ import {ProjectService} from "../services/project.service";
 @Component({
     selector: 'editor',
     template: `
-        <div class="navbar">
-            <span class="title" (click)="editProjectName()">
-                <div *ngIf="!isEditingProjectName">
-                    {{projectCfgCopy.projectName}} <i class="fa fa-pencil"></i>
-                </div>
-                <div *ngIf="isEditingProjectName">
-                    <input size="20" [(ngModel)]="projectNameEditor" (keypress)="finishEdit($event)">
-                </div>
-            </span>
-        </div>
+        <editor-navbar></editor-navbar>
         <div class="editor">
             <project-assets (editorCommands)="parseEditorCommand($event)"></project-assets>
             <div class="mainContainer" *ngIf="mustShowCanvas()">
@@ -29,8 +20,6 @@ import {ProjectService} from "../services/project.service";
     `
 })
 export class EditorPageComponent{
-    isEditingProjectName:boolean = false;
-    projectNameEditor:string;
     isSelectingBackground:boolean = false;
     isAddingMolecule:boolean = false;
 
@@ -44,16 +33,6 @@ export class EditorPageComponent{
         this.projectCfgCopy = projectService.getProjectConfig();
     }
 
-    editProjectName(){
-        this.projectNameEditor = this.projectCfgCopy.projectName;
-        this.isEditingProjectName = true;
-    }
-    finishEdit(event:any){
-        if(event.code == 'Enter'){
-            this.isEditingProjectName = false;
-            this.projectService.updateProjectName(this.projectNameEditor);
-        }
-    }
 
     isNewEmptyProject(){
         return !this.projectCfgCopy.hasOwnProperty('background') || this.projectCfgCopy.background === null;

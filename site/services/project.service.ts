@@ -58,6 +58,10 @@ export class ProjectService {
         return null;
     }
 
+    getProjectName(){
+        return this.projectCfg.hasOwnProperty('projectName')?this.projectCfg.projectName:'';
+    }
+
     updateProjectName(newName:string){
         this.projectCfg.projectName = newName;
         this.saveChangesLocally();

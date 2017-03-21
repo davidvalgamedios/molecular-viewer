@@ -1,25 +1,27 @@
 @import 'base-colors';
 
-.navbar{
-  padding: 7px 14px;
-  background-color: $primaryColor;
-  text-align: center;
-  color: white;
+editor-navbar{
+  .navbar{
+    padding: 7px 14px;
+    background-color: $primaryColor;
+    text-align: center;
+    color: white;
 
-  .title{
-    cursor: pointer;
-    line-height: 30px;
-    font-size: 20px;
-    font-weight: 300;
+    .title{
+      cursor: pointer;
+      line-height: 30px;
+      font-size: 20px;
+      font-weight: 300;
 
-    .fa-pencil{
-      margin-left: 5px;
-      visibility: hidden;
-    }
-
-    &:hover{
       .fa-pencil{
-        visibility: visible;
+        margin-left: 5px;
+        visibility: hidden;
+      }
+
+      &:hover{
+        .fa-pencil{
+          visibility: visible;
+        }
       }
     }
   }
