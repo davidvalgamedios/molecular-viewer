@@ -102,7 +102,7 @@ export class ProjectAssetsComponent {
         }
     }
 
-    removeMolecule(moleculeId){
+    removeMolecule(moleculeId:string){
         this.projectService.removeMolecule(moleculeId);
     }
 }

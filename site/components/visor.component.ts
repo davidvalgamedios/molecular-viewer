@@ -5,7 +5,7 @@ import {MoleculesService} from "../services/molecules.service";
 import {ProjectService} from "../services/project.service";
 import {BackgroundsService} from "../services/backgrounds.service";
 import {MoleculeParserHelper} from "../helpers/molecule-parser.helper";
-//import * as THREE from 'three';
+import * as THREE from 'three';
 
 @Component({
     selector: 'visor',
@@ -187,7 +187,7 @@ export class VisorComponent implements OnInit{
     }
 
 
-    private calculateBackgroundSize(imgWidth, imgHeight){
+    private calculateBackgroundSize(imgWidth:number, imgHeight:number){
         if(this.height > this.width){
             return {
                 width: this.height,
@@ -208,7 +208,7 @@ export class VisorComponent implements OnInit{
         }
     }
 
-    private deleteSceneObj(objId){
+    private deleteSceneObj(objId:string){
         let childrenNum = this.scene.children.length;
         for(let i = 0; i<childrenNum;i++){
             let children = this.scene.children[i];
