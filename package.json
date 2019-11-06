@@ -11,7 +11,7 @@
     "compression": "^1.6.2",
     "ejs": "2.5.x",
     "express": "4.14.x",
-    "mongoose": "4.7.x"
+    "mongoose": "5.7.x"
   },
   "engines": {
     "node": "6.9.1"
